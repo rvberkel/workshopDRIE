@@ -43,3 +43,6 @@ Hibernate/BestelAppWithoutAnnotations/target/
 Hibernate/BestelAppWithoutAnnotations/log/
 /WebBestelApp/WebBestelApp/nbproject/private/
 /WebBestelApp/target/
+webapp/.settings/
+webapp/target/
+*.classpath
