@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+        
+        <!-- collections voor KLANT en FACTUUR (betalingen is dubbel) -->
+            <util:map id="adressen" scope="prototype" map-class="java.util.HashMap" 
+              key-type="POJO.Adres" value-type="POJO.AdresType">
+            </util:map>
+
+            <util:set id="betalingen" scope="prototype" set-class="java.util.HashSet" 
+              value-type="POJO.Betaling">
+            </util:set>
+            
+            <util:set id="accounts" scope="prototype" set-class="java.util.HashSet" 
+              value-type="POJO.Account">
+            </util:set>
+            
+            <util:set id="bestellingen" scope="prototype" set-class="java.util.HashSet" 
+              value-type="POJO.Bestelling">
+            </util:set>
+            
+            
+        <!-- collections voor BESTELLING -->
+            <util:set id="bestellingHasArtikelen" scope="prototype" set-class="java.util.HashSet" 
+              value-type="POJO.BestellingHasArtikel">
+            </util:set>
+            
+            <util:set id="facturen" scope="prototype" set-class="java.util.HashSet" 
+              value-type="POJO.Factuur">
+            </util:set>
+        
+    </beans>
