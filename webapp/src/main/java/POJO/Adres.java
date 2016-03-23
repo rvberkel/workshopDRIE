@@ -10,10 +10,9 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("adres")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name = "adres")
 public class Adres implements java.io.Serializable {

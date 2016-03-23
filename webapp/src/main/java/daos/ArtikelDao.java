@@ -18,19 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("ArtikelDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(ArtikelDao.class);
 
   
     public List<Artikel> readByExample(Artikel artikel) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding artikel by example");
 		@SuppressWarnings("unchecked")
 		List<Artikel> results = (List<Artikel>)criteria.add(create(artikel)).list();
@@ -39,8 +38,8 @@ public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
 
     @Override
     public List<Artikel> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-        Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+        //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Artikel> results = (List<Artikel>)criteria.add(create(Artikel.class)).list();

@@ -11,10 +11,9 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name = "artikel")
 public class Artikel implements java.io.Serializable {

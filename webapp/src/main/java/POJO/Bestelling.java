@@ -16,19 +16,18 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("bestelling")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name="bestelling")
 public class Bestelling implements java.io.Serializable {
     private Integer idBestelling;
     private Klant klant;
-    //@Resource(name="bestellingHasArtikelen")
-    private Set<BestellingHasArtikel> bestellingHasArtikelen = new HashSet<>();
-    //@Resource(name="facturen")
-    private Set<Factuur> facturen = new HashSet<>();
+    @Resource(name="bestellingHasArtikelen")
+    private Set<BestellingHasArtikel> bestellingHasArtikelen;
+    @Resource(name="facturen")
+    private Set<Factuur> facturen;
 
     public Bestelling() {
     }

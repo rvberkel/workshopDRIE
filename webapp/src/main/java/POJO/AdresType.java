@@ -14,10 +14,9 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("adresType")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name = "adres_type")
 public class AdresType implements Serializable{

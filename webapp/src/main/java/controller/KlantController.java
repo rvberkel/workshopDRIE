@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import Service.KlantenService;
@@ -15,21 +20,82 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import POJO.Klant;
 
 import javax.servlet.RequestDispatcher;
 
-@WebServlet("/KlantController")
+@Controller
+//@WebServlet("/KlantController")
 public class KlantController extends HttpServlet {
   private static final long serialVersionUID = 1L;
     private static String INSERT_OR_EDIT = "/klant.jsp";
     private static String LIST_KLANT = "/listKlant.jsp";
-    private KlantenService dao = new KlantenService();
+    @Autowired
+    private KlantenService dao;
+    @Autowired
+    Klant klant;
     
-    //@RequestMapping(method=RequestMethod.GET)
+    @RequestMapping(value="/delete", method=RequestMethod.GET)
+    public String deleteKlant(@RequestParam("getId") String idKlant, Model model) {
+    	int klantId = Integer.parseInt(idKlant);
+    	dao.deleteKlantById(klantId);
+    	model.addAttribute("klanten", dao.readAlleKlanten());
+    	return "listKlant";
+    }
+    
+    @RequestMapping(value="/create", method=RequestMethod.GET)
+    public String showCreateKlantForm() {
+    	return "klant";
+    }
+    
+    @RequestMapping(value="/update", method=RequestMethod.GET)
+    public String showUpdateKlantForm(@RequestParam("idKlant") String idKlant, Model model) {
+    	int klantId = Integer.parseInt(idKlant);
+    	klant = dao.readKlantOpId(klantId);
+    	model.addAttribute("klant", klant);
+    	return "klant";
+    }
+    
+    @RequestMapping(value="/createKlant", method=RequestMethod.POST)
+    /*
+    public String createKlant(Model model) {
+    	klant.setVoornaam("Henk");
+    	klant.setAchternaam("Moeder");
+    	klant.setTussenvoegsel("de");
+    	klant.setEmail("henk@moeder.com");
+    	dao.createKlant(klant);
+    	model.addAttribute("klanten", dao.readAlleKlanten());
+    	return "listKlant";
+    }
+    */
+    
+    public String createKlant(@ModelAttribute("voornaam") String voornaam, @ModelAttribute("tussenvoegsel") String tussenvoegsel, 
+    		@ModelAttribute("achternaam") String achternaam, @ModelAttribute("email") String email, 
+    		@RequestParam("idKlant") String idKlant, Model model) {
+    	Klant klant = new Klant();
+    	klant.setVoornaam(voornaam);
+    	klant.setTussenvoegsel(tussenvoegsel);
+    	klant.setAchternaam(achternaam);
+    	klant.setEmail(email);
+    	if (idKlant == null || idKlant.isEmpty())
+    		dao.createKlant(klant);
+    	else {
+    		klant.setIdKlant(Integer.parseInt(idKlant));
+    		dao.updateKlant(klant);
+    	}
+    	model.addAttribute("klanten", dao.readAlleKlanten());
+    	return "listKlant";
+    }
+    
+    
+    /*
+    @RequestMapping(value="listKlant", method=RequestMethod.GET)
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
         String forward="";
@@ -55,7 +121,8 @@ public class KlantController extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
-
+    
+    @RequestMapping(value="/klant.jsp", method=RequestMethod.POST)
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	Klant klant = new Klant();
@@ -77,4 +144,5 @@ public class KlantController extends HttpServlet {
         request.setAttribute("klanten", dao.readAlleKlanten());
         view.forward(request, response);
     }
+    */
 }

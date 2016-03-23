@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("bestellingService")
+@Scope("prototype")
 public class BestellingService {
     private static final Logger LOG = LoggerFactory.getLogger(BestellingService.class);
     @Autowired

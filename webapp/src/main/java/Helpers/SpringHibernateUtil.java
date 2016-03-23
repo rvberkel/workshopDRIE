@@ -21,10 +21,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.*;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan({"POJO", "Helpers", "Service", "daos", "genericDao"})
-//@EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:app.properties")
 //@ImportResource("classpath:collections4spring.xml") //optioneel via xml configuratie

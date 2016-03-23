@@ -19,18 +19,17 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-/*
+
 @Repository("AccountDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class AccountDao extends GenericDaoImpl<Account, Integer> {
 	private static final Logger LOG = LoggerFactory.getLogger(AccountDao.class);
     
     public List<Account> readByExample(Account account) {
-    	//Session session = getCurrentSession();
-    	Session session = getSession();
+    	Session session = getCurrentSession();
+    	//Session session = getSession();
     	Criteria criteria = createEntityCriteria(session);
     	LOG.info("Started finding account by example");
     	@SuppressWarnings("unchecked")
@@ -40,8 +39,8 @@ public class AccountDao extends GenericDaoImpl<Account, Integer> {
 
     @Override
     public List<Account> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Account> results = (List<Account>)criteria.add(create(Account.class)).list();

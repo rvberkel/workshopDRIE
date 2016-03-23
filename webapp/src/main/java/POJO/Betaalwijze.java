@@ -14,10 +14,9 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("betaalwijze")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name="Betaalwijze")
 public class Betaalwijze implements Serializable {

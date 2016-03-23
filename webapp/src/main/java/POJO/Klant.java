@@ -21,12 +21,13 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-/*
+import org.springframework.web.context.WebApplicationContext;
+
 @Component("klant")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
-@Entity
+@Scope("prototype")
+@Entity(name="klant")
 @Table(name= "klant")
 public class Klant implements java.io.Serializable {
     private Integer idKlant;
@@ -35,14 +36,14 @@ public class Klant implements java.io.Serializable {
     private String achternaam;
     private String email;
     
-    //@Resource(name="betalingen")
-    private Set<Betaling> betalingen = new HashSet<>();
-    //@Resource(name="bestellingen")
-    private Set<Bestelling> bestellingen  = new HashSet<>();
-    //@Resource(name="accounts")
-    private Set<Account> accounts = new HashSet<>();
-    //@Resource(name="adressen")
-    private Map<Adres, AdresType> adressen = new HashMap<>();
+    @Resource(name="betalingen")
+    private Set<Betaling> betalingen;
+    @Resource(name="bestellingen")
+    private Set<Bestelling> bestellingen;
+    @Resource(name="accounts")
+    private Set<Account> accounts;
+    @Resource(name="adressen")
+    private Map<Adres, AdresType> adressen;
 
     public Klant() {
     }

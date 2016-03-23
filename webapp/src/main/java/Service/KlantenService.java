@@ -27,26 +27,24 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-/*
+
 @Service("klantenService")
 @Scope("prototype")
-*/
 public class KlantenService {
     private static final Logger LOG = LoggerFactory.getLogger(KlantenService.class);
     
-    //@Autowired
-    //@Qualifier("KlantDao")
-    GenericDao klantDao = new KlantDao();
-    //@Autowired
-    //@Qualifier("AccountDao")
-    GenericDao accountDao = new AccountDao();
-    //@Autowired
-    //@Qualifier("AdresDao")
-    GenericDao adresDao = new AdresDao();
-    //@Autowired
-    //@Qualifier("AdresTypeDao")
-    GenericDao adresTypeDao = new AdresTypeDao();
-    
+    @Autowired
+    @Qualifier("KlantDao")
+    GenericDao klantDao;
+    @Autowired
+    @Qualifier("AccountDao")
+    GenericDao accountDao;
+    @Autowired
+    @Qualifier("AdresDao")
+    GenericDao adresDao;
+    @Autowired
+    @Qualifier("AdresTypeDao")
+    GenericDao adresTypeDao;
    // ===== Create ======
     
     public boolean createKlant(Klant klant){

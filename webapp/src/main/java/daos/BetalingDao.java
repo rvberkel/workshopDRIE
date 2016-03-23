@@ -20,17 +20,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("BetalingDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class BetalingDao extends GenericDaoImpl<Betaling, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(BetalingDao.class);
     public List<Betaling> readByExample(Betaling betaling) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding betaling by example");
     	@SuppressWarnings("unchecked")
 		List<Betaling> results = (List<Betaling>)criteria.add(create(betaling)).list();
@@ -39,8 +38,8 @@ public class BetalingDao extends GenericDaoImpl<Betaling, Integer> {
 
     @Override
     public List<Betaling> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-        Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+        //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Betaling> results = (List<Betaling>)criteria.add(create(Betaling.class)).list();

@@ -23,17 +23,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("KlantDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class KlantDao extends GenericDaoImpl<Klant, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(KlantDao.class);
     public List<Klant> readByExample(Klant klant) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding klant by example");
     	@SuppressWarnings("unchecked")
 		List<Klant> results = (List<Klant>)criteria.add(create(klant)).list();
@@ -50,7 +49,7 @@ public class KlantDao extends GenericDaoImpl<Klant, Integer> {
         return results;
         */
     	String query = "select * from klant";
-    	Session session = getSession();
+    	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(Klant.class);
     	List<Klant> results = (List<Klant>)q.list();

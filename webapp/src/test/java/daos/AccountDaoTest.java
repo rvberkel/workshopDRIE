@@ -3,6 +3,8 @@ package daos;
 import Helpers.DatabaseClearer;
 import Helpers.HibernateUtil;
 import Helpers.SpringHibernateUtil;
+import Helpers.WebAppInitializer;
+import Helpers.WebConfig;
 import POJO.Account;
 import POJO.Klant;
 import genericDao.GenericDao;

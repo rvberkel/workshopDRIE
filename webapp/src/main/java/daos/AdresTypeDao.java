@@ -21,18 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("AdresTypeDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class AdresTypeDao extends GenericDaoImpl<AdresType, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(AdresTypeDao.class);
 
 	public List<AdresType> readByExample(AdresType adresType) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding adrestype by example");
 		@SuppressWarnings("unchecked")
 		List<AdresType> results = (List<AdresType>)criteria.add(create(adresType)).list();
@@ -41,8 +40,8 @@ public class AdresTypeDao extends GenericDaoImpl<AdresType, Integer> {
 
     @Override
     public List<AdresType> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-        Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+        //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<AdresType> results = (List<AdresType>)criteria.add(create(AdresType.class)).list();

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface GenericDao <T, PK extends Serializable> { 
-    
     PK createEntity(T newInstance);
     List<T> readByExample(T t);
     T readEntity(PK id);

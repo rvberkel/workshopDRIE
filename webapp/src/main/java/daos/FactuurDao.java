@@ -17,18 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("FactuurDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
-@Transactiona
-*/
+@Transactional
 public class FactuurDao extends GenericDaoImpl<Factuur, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(FactuurDao.class);
     
     public List<Factuur> readByExample(Factuur factuur) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding factuur by example");
     	@SuppressWarnings("unchecked")
 		List<Factuur> results = (List<Factuur>)criteria.add(create(factuur)).list();
@@ -37,8 +36,8 @@ public class FactuurDao extends GenericDaoImpl<Factuur, Integer> {
 
     @Override
     public List<Factuur> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-        Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+        //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Factuur> results = (List<Factuur>)criteria.add(create(Factuur.class)).list();

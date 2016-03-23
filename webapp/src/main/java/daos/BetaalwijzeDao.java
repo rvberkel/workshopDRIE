@@ -21,18 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Scope;
-/*
+
 @Repository("BetaalwijzeDao")
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-*/
 public class BetaalwijzeDao extends GenericDaoImpl<Betaalwijze, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(BetaalwijzeDao.class);
 
     public List<Betaalwijze> readByExample(Betaalwijze betaalwijze) {
-    	//Criteria criteria = createEntityCriteria(getCurrentSession());
-    	Criteria criteria = createEntityCriteria(getSession());
+    	Criteria criteria = createEntityCriteria(getCurrentSession());
+    	//Criteria criteria = createEntityCriteria(getSession());
     	LOG.info("Started finding betaalwijze by example");
     	@SuppressWarnings("unchecked")
 		List<Betaalwijze> results = (List<Betaalwijze>)criteria.add(create(betaalwijze)).list();
@@ -41,8 +40,8 @@ public class BetaalwijzeDao extends GenericDaoImpl<Betaalwijze, Integer> {
 
     @Override
     public List<Betaalwijze> readAll() {
-        //Criteria criteria = createEntityCriteria(getCurrentSession());
-        Criteria criteria = createEntityCriteria(getSession());
+        Criteria criteria = createEntityCriteria(getCurrentSession());
+        //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Betaalwijze> results = (List<Betaalwijze>)criteria.add(create(Betaalwijze.class)).list();

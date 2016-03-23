@@ -18,18 +18,17 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("factuur")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-*/
 @Entity
 @Table(name="factuur")
 public class Factuur implements java.io.Serializable {
     private Integer idFactuur;
     private Bestelling bestelling;
     private Date factuurDatum;
-    //@Resource(name = "betalingen")
-    private Set<Betaling> betalingen = new HashSet<>();
+    @Resource(name = "betalingen")
+    private Set<Betaling> betalingen;
 
     public Factuur() {
     }

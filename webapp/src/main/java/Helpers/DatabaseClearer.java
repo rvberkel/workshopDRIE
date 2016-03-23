@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class DatabaseClearer {
 	@Autowired
     private SessionFactory factory;
-    private Session session = null;
+    private Session session;
     private final String[] tableNames = {"account", "klant_has_adres", "bestelling_has_artikel", "betaling", "factuur",
         "bestelling", "artikel", "adres", "klant", "adres_type", "betaalwijze"};
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseClearer.class);
