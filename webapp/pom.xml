@@ -9,6 +9,14 @@
   <url>http://maven.apache.org</url>
   <dependencies>
   
+      <!-- scrypt -->
+      <dependency>
+          <groupId>com.lambdaworks</groupId>
+          <artifactId>scrypt</artifactId>
+          <version>1.4.0</version>
+      </dependency>
+   
+
   <!-- HIBERNATE -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -27,38 +35,39 @@
         </dependency>
         
 <!-- Servlet API and JSTL -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>       
-        <!--<dependency>
-   			<groupId>javax.servlet</groupId>
-   			<artifactId>jstl</artifactId>
-   			<version>1.2</version>
-  		</dependency>
-  		<dependency>
-   			<groupId>org.apache.taglibs</groupId>
-   			<artifactId>taglibs-standard-impl</artifactId>
-   			<version>1.2.5</version>
-  		</dependency>
-  		<dependency>
-   			<groupId>org.apache.taglibs</groupId>
-   			<artifactId>taglibs-standard-spec</artifactId>
-   			<version>1.2.5</version>
-  		</dependency>
-  		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>-->
-  		<dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+                <!--      
+        <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+        </dependency>
+        <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-impl</artifactId>
+                <version>1.2.5</version>
+        </dependency>
+        <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-spec</artifactId>
+                <version>1.2.5</version>
+        </dependency>
+        <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
+        </dependency> -->
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.23</version>
@@ -106,26 +115,26 @@
         </dependency>
         
         <!-- SPRING -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>4.2.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>4.2.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>4.2.5.RELEASE</version>
-		</dependency>
         <dependency>
- 			<groupId>org.springframework</groupId>
- 			<artifactId>spring-orm</artifactId>
- 			<version>4.2.5.RELEASE</version>
-		</dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
   </dependencies>
   
   <build>
