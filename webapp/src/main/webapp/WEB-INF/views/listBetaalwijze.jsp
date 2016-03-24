@@ -8,7 +8,7 @@
 <title>Show All Betaalwijzen/Payment methods</title>
 </head>
 <body>
-    <p><a href="create">Add Betaalwijze</a></p>
+    <p><a href="createbetaalwijze">Add Betaalwijze</a></p>
     <table border=1>
         <thead>
             <tr>
@@ -21,13 +21,12 @@
             <c:forEach items="${betaalwijzen}" var="betaalwijze">
                 <tr>
                     <td><c:out value="${betaalwijze.idBetaalwijze}" /></td>
-                    <td><c:out value="${betaalwijze.omschrijving}" /></td>
-                    <td><a href="update?idBetaalwijze=${betaalwijze.idBetaalwijze}">Update</a></td>
-                    <td><a href="delete?idBetaalwijze=${betaalwijze.idBetaalwijze}">Delete</a></td>
+                    <td><c:out value="${betaalwijze.betaalwijze}" /></td>
+                    <td><a href="updateBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}">Update</a></td>
+                    <td><a href="deleteBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}">Delete</a></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-    <p><a href="create">Add Betaalwijze</a></p>
 </body>
 </html>

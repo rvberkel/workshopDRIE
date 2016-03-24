@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package daos;
 
 import POJO.Betaalwijze;
@@ -45,7 +41,7 @@ public class BetaalwijzeDao extends GenericDaoImpl<Betaalwijze, Integer> {
     	/*
         Criteria criteria = createEntityCriteria(getCurrentSession());
         //Criteria criteria = createEntityCriteria(getSession());
-        LOG.info("Started finding all klanten");
+        LOG.info("Started finding all betaalwijzen");
         @SuppressWarnings("unchecked")
         List<Betaalwijze> results = (List<Betaalwijze>)criteria.add(create(Betaalwijze.class)).list();
         return results;
@@ -57,5 +53,6 @@ public class BetaalwijzeDao extends GenericDaoImpl<Betaalwijze, Integer> {
     	q.addEntity(Betaalwijze.class);
     	List<Betaalwijze> results = (List<Betaalwijze>)q.list();
     	return results;
+    	
     }
 }

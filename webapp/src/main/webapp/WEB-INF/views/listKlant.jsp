@@ -35,5 +35,10 @@
             </c:forEach>
         </tbody>
     </table>
+    
+    <a href="<c:url value="/createbetaalwijze" />">Create Betaalwijze</a> | 
+    
+    <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> 
+    
 </body>
 </html>

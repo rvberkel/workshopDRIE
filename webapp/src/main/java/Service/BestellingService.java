@@ -148,6 +148,10 @@ public class BestellingService {
         LOG.info("readBetaalWijzeOpId gestart");
         return (Betaalwijze) betaalwijzeDao.readEntity(betaalwijzeId);
     }
+    public List<Betaalwijze> readAlleBetaalwijzen(){
+        LOG.info("readAlleBetaalwijzen gestart");
+        return(List<Betaalwijze>)betaalwijzeDao.readAll();
+    } 
     
     // ===================== update =========================
     
