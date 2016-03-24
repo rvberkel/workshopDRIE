@@ -6,11 +6,13 @@
 package daos;
 
 import POJO.Betaalwijze;
+import POJO.Klant;
 import genericDao.GenericDaoImpl;
 
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
@@ -40,11 +42,20 @@ public class BetaalwijzeDao extends GenericDaoImpl<Betaalwijze, Integer> {
 
     @Override
     public List<Betaalwijze> readAll() {
+    	/*
         Criteria criteria = createEntityCriteria(getCurrentSession());
         //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<Betaalwijze> results = (List<Betaalwijze>)criteria.add(create(Betaalwijze.class)).list();
         return results;
+        */
+        
+        String query = "select * from betaalwijze";
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	q.addEntity(Betaalwijze.class);
+    	List<Betaalwijze> results = (List<Betaalwijze>)q.list();
+    	return results;
     }
 }
