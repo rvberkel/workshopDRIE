@@ -98,13 +98,14 @@ public class BestellingService {
         LOG.info("readArtikel gestart");
         return artikelDao.readByExample(artikel);
     }
-    public List <Artikel> readAllArtikel(){
-        LOG.info("read alle artikelen gestart");
-        return (List<Artikel>)artikelDao.readAll();
-    }
     public Artikel readArtikelOpId(int artikelId){
         LOG.info("readArtikelOpId gestart");
         return (Artikel) artikelDao.readEntity(artikelId);
+    }
+    
+    public List <Artikel> readAllArtikel(){
+        LOG.info("read alle artikelen gestart");
+        return (List<Artikel>)artikelDao.readAll();
     }
     
     public List<Factuur> readFactuur(Factuur factuur){
@@ -152,10 +153,11 @@ public class BestellingService {
         LOG.info("readBetaalWijzeOpId gestart");
         return (Betaalwijze) betaalwijzeDao.readEntity(betaalwijzeId);
     }
+    
     public List<Betaalwijze> readAlleBetaalwijzen(){
         LOG.info("readAlleBetaalwijzen gestart");
         return(List<Betaalwijze>)betaalwijzeDao.readAll();
-    } 
+    }
     
     // ===================== update =========================
     

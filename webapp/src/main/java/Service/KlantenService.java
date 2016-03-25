@@ -40,8 +40,8 @@ public class KlantenService {
     @Qualifier("AccountDao")
     GenericDao accountDao;
     @Autowired
-    @Qualifier("AdresDao")
-    GenericDao adresDao;
+    //@Qualifier("AdresDao")
+    AdresDao adresDao;
     @Autowired
     @Qualifier("AdresTypeDao")
     GenericDao adresTypeDao;
@@ -102,6 +102,16 @@ public class KlantenService {
     public Adres readAdresOpId(int adresId){
         LOG.info("readAdres gestart");
         return (Adres)adresDao.readEntity(adresId);
+    }
+    
+    public List<Adres> readAdresOpKlantId(int klantId){
+    	LOG.info("readAdresOpKlantId gestart");
+    	return (List<Adres>)adresDao.readByKlantId(klantId);
+    }
+    
+    public List<Adres> readAlleAdressen(){
+        LOG.info("readAlleAdressen gestart");
+        return(List<Adres>)adresDao.readAll();
     }
     public Account readAccountOpId(int accountId){
         LOG.info("readAccount op account id gestart");
@@ -190,6 +200,17 @@ public class KlantenService {
             LOG.error(ex.getMessage());
             return false;
         }
+    }
+    
+    public boolean deleteAdresFromKlant(int klantId, int adresId) {
+    	LOG.info("verwijder adres uit klant gestart");
+    	try {
+            adresDao.decoupleAdresFromKlant(klantId, adresId);
+            return true;
+            } catch (HibernateException ex){
+                LOG.error(ex.getMessage());
+                return false;
+            }
     }
     
     public boolean deleteAccount(Account account){

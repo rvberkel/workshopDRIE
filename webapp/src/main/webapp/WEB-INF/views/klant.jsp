@@ -8,7 +8,7 @@
 <title>Add new klant</title>
 </head>
 <body>
-    <form ID="createKlant?idKlant=${klant.idKlant}" method="POST" action="/webapp/createKlant">
+    <form ID="createOrUpdateKlant?idKlant=${klant.idKlant}" method="POST" action="/webapp/createOrUpdateKlant">
         KlantID : <input type="text" readonly="readonly" name="idKlant"
             value="<c:out value="${klant.idKlant}" />" /> <br /> 
         Voornaam : <input type="text" name="voornaam"

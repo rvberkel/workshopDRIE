@@ -2,7 +2,6 @@
 package daos;
 
 import POJO.Artikel;
-import POJO.Klant;
 import genericDao.GenericDao;
 import genericDao.GenericDaoImpl;
 
@@ -39,13 +38,12 @@ public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
     }
 
     @Override
-    public List<Artikel> readAll(){
-   
+    public List<Artikel> readAll() {
     	String query = "select * from artikel";
-    	Session session = getCurrentSession();
-    	SQLQuery q = session.createSQLQuery(query);
-    	q.addEntity(Artikel.class);
-    	List<Artikel> results = (List<Artikel>)q.list();
-    	return results;
+        Session session = getCurrentSession();
+        SQLQuery q = session.createSQLQuery(query);
+        q.addEntity(Artikel.class);
+        List<Artikel> results = (List<Artikel>)q.list();
+        return results;
     }
 }

@@ -39,7 +39,7 @@ public class Betaalwijze implements Serializable {
         return this.betaalwijze;
     }
     
-    public void setBetaalwijze(String betaalwijze){
+    protected void setBetaalwijze(String betaalwijze){
         this.betaalwijze = betaalwijze;
     }
     

@@ -25,36 +25,40 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import POJO.Klant;
 
 import javax.servlet.RequestDispatcher;
 
 @Controller
-//@WebServlet("/KlantController")
-public class KlantController extends HttpServlet {
-  private static final long serialVersionUID = 1L;
-    private static String INSERT_OR_EDIT = "/klant.jsp";
-    private static String LIST_KLANT = "/listKlant.jsp";
+public class KlantController {
     @Autowired
     private KlantenService dao;
     @Autowired
     Klant klant;
     
-    @RequestMapping(value="/delete", method=RequestMethod.GET)
-    public String deleteKlant(@RequestParam("getId") String idKlant, Model model) {
+    @RequestMapping(value="/deleteKlant", method=RequestMethod.GET)
+    public String deleteKlant(@RequestParam("idKlant") String idKlant, Model model) {
     	int klantId = Integer.parseInt(idKlant);
     	dao.deleteKlantById(klantId);
+    	model.addAttribute("welcomeMessage");
     	model.addAttribute("klanten", dao.readAlleKlanten());
     	return "listKlant";
     }
     
-    @RequestMapping(value="/create", method=RequestMethod.GET)
+    @RequestMapping(value="/showCreateKlantForm", method=RequestMethod.GET)
     public String showCreateKlantForm() {
     	return "klant";
     }
     
-    @RequestMapping(value="/update", method=RequestMethod.GET)
+    @RequestMapping(value="/showListKlant", method=RequestMethod.GET)
+    public String showListKlant(Model model) {
+    	model.addAttribute("klanten", dao.readAlleKlanten());
+    	return "listKlant";
+    }
+    
+    @RequestMapping(value="/showUpdateKlantForm", method=RequestMethod.GET)
     public String showUpdateKlantForm(@RequestParam("idKlant") String idKlant, Model model) {
     	int klantId = Integer.parseInt(idKlant);
     	klant = dao.readKlantOpId(klantId);
@@ -62,19 +66,7 @@ public class KlantController extends HttpServlet {
     	return "klant";
     }
     
-    @RequestMapping(value="/createKlant", method=RequestMethod.POST)
-    /*
-    public String createKlant(Model model) {
-    	klant.setVoornaam("Henk");
-    	klant.setAchternaam("Moeder");
-    	klant.setTussenvoegsel("de");
-    	klant.setEmail("henk@moeder.com");
-    	dao.createKlant(klant);
-    	model.addAttribute("klanten", dao.readAlleKlanten());
-    	return "listKlant";
-    }
-    */
-    
+    @RequestMapping(value="/createOrUpdateKlant", method=RequestMethod.POST)
     public String createKlant(@ModelAttribute("voornaam") String voornaam, @ModelAttribute("tussenvoegsel") String tussenvoegsel, 
     		@ModelAttribute("achternaam") String achternaam, @ModelAttribute("email") String email, 
     		@RequestParam("idKlant") String idKlant, Model model) {

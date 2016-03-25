@@ -15,6 +15,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
@@ -25,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan({"POJO", "Helpers", "Service", "daos", "genericDao"})
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass=true)
 @PropertySource("classpath:app.properties")
 //@ImportResource("classpath:collections4spring.xml") //optioneel via xml configuratie
 public class SpringHibernateUtil {
