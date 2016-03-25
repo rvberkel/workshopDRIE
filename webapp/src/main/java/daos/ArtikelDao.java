@@ -2,12 +2,14 @@
 package daos;
 
 import POJO.Artikel;
+import POJO.Klant;
 import genericDao.GenericDao;
 import genericDao.GenericDaoImpl;
 
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
@@ -37,12 +39,13 @@ public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
     }
 
     @Override
-    public List<Artikel> readAll() {
-        Criteria criteria = createEntityCriteria(getCurrentSession());
-        //Criteria criteria = createEntityCriteria(getSession());
-        LOG.info("Started finding all klanten");
-        @SuppressWarnings("unchecked")
-        List<Artikel> results = (List<Artikel>)criteria.add(create(Artikel.class)).list();
-        return results;
+    public List<Artikel> readAll(){
+   
+    	String query = "select * from artikel";
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	q.addEntity(Artikel.class);
+    	List<Artikel> results = (List<Artikel>)q.list();
+    	return results;
     }
 }

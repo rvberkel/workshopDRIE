@@ -38,7 +38,9 @@
     
     <a href="<c:url value="/createbetaalwijze" />">Create Betaalwijze</a> | 
     
-    <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> 
+    <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> |
+    
+    <a href="<c:url value="/listArtikelen" />">Alle Artikelen</a> 
     
 </body>
 </html>

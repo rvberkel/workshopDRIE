@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "artikel")
 public class Artikel implements java.io.Serializable {
-    private int idArtikel;
+    private Integer idArtikel;
     private String artikelnaam;
     private double  artikelprijs;
     private String artikelnummer;
@@ -28,11 +28,11 @@ public class Artikel implements java.io.Serializable {
     
     @Id
     @GeneratedValue (strategy = IDENTITY)
-    public int getIdArtikel() {
+    public Integer getIdArtikel() {
         return this.idArtikel;
     }
     
-    public void setIdArtikel(int idArtikel) {
+    public void setIdArtikel(Integer idArtikel) {
         this.idArtikel = idArtikel;
     }
     @Column

@@ -98,6 +98,10 @@ public class BestellingService {
         LOG.info("readArtikel gestart");
         return artikelDao.readByExample(artikel);
     }
+    public List <Artikel> readAllArtikel(){
+        LOG.info("read alle artikelen gestart");
+        return (List<Artikel>)artikelDao.readAll();
+    }
     public Artikel readArtikelOpId(int artikelId){
         LOG.info("readArtikelOpId gestart");
         return (Artikel) artikelDao.readEntity(artikelId);
