@@ -20,17 +20,17 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name="Betaalwijze")
 public class Betaalwijze implements Serializable {
-    private int idBetaalwijze;
+    private Integer idBetaalwijze;
     private String betaalwijze;
     private static String[] betaalWijzes = {"Contant","Pinbetaling","iDeal","Creditcard","PayPal","AfterPay","Natura"};
     
     @Id
     @GeneratedValue (strategy = IDENTITY)
-    public int getIdBetaalwijze(){
+    public Integer getIdBetaalwijze(){
         return this.idBetaalwijze;
     }
     
-    public void setIdBetaalwijze(int id){
+    public void setIdBetaalwijze(Integer id){
         this.idBetaalwijze = id;
     }
     

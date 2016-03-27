@@ -25,11 +25,10 @@
 	            <tr><td>6</td><td>Natura</td></tr>
         </tbody>
     </table>
-	Maak veld BetaalID leeg als je niet update!!
-    <form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" action="/webapp/createBetaalwijze">
-        BetaalwijzeID : <input type="text" name="idBetaalwijze"
+    <form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" action="/webapp/createbetaalwijze">
+        BetaalwijzeID : <input type="text" readonly="readonly" name="idBetaalwijze"
             value="<c:out value="${betaalwijze.idBetaalwijze}" />" /> <br /> 
-        Betaalwijze (voer getal in!) : <input type="text" name="betaalwijze"
+        Betaalwijze (voer een getal in!) : <input type="text" name="betaalwijze"
             value="<c:out value="${betaalwijze.betaalwijze}" />" /> <br />
 			<input type="submit" value="Submit" />
     </form>
