@@ -36,4 +36,5 @@
         </tbody>
     </table>
 </body>
+<p><a href="showListKlant">Terug naar klantenlijst</a></p>
 </html>

@@ -30,7 +30,7 @@ public class Artikel implements java.io.Serializable {
     private double  artikelprijs;
     @Min(1)@Max(1000)
     private String artikelnummer;
-    @NotEmpty
+    @NotEmpty(message = "geef een omschrijving in")
     private String artikelomschrijving;
     
     public Artikel() {
