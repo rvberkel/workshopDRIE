@@ -7,7 +7,12 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,9 +23,14 @@ import org.springframework.stereotype.Component;
 @Table(name = "artikel")
 public class Artikel implements java.io.Serializable {
     private Integer idArtikel;
+    @NotNull
+    @NotEmpty(message = "geef een naam in")
+    @Size(min =2, max=30, message = "naam moet tussen de 2 en 30 tekens zijn")
     private String artikelnaam;
     private double  artikelprijs;
+    @Min(1)@Max(1000)
     private String artikelnummer;
+    @NotEmpty
     private String artikelomschrijving;
     
     public Artikel() {

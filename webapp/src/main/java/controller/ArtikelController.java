@@ -7,11 +7,15 @@ package controller;
 
 import POJO.Artikel;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,10 +60,14 @@ public class ArtikelController {
     }
 
     @RequestMapping(value = "/createArtikel", method = RequestMethod.POST)
-    public String createArtikel(@RequestParam("artikelnaam") String artikelnaam, @RequestParam("artikelprijs") String artikelprijs,
+    public String createArtikel(@Valid Artikel artikel, Errors errors, @RequestParam("artikelnaam") String artikelnaam, @RequestParam("artikelprijs") String artikelprijs,
             @RequestParam("artikelnummer") String artikelnummer, @RequestParam("artikelomschrijving") String artikelomschrijving,
             @RequestParam("idArtikel") String idArtikel, Model model) {
-        Artikel artikel = new Artikel();
+        //Artikel artikel = new Artikel();
+    	if(errors.hasErrors()){
+    		model.addAttribute("artikelen", dao.readAllArtikel());
+    		return "listArtikelen";
+    	}
         artikel.setArtikelnaam(artikelnaam);
         artikel.setArtikelnummer(artikelnummer);
         artikel.setArtikelprijs((Double.parseDouble(artikelprijs)));
