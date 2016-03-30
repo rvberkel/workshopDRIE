@@ -38,6 +38,7 @@
         </tbody>
     </table> 
     <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> |
-    <a href="<c:url value="/listArtikelen" />">Alle Artikelen</a>
+    <a href="<c:url value="/listArtikelen" />">Alle Artikelen</a> |
+    <a href="<c:url value="/listFacturen" />">Alle Facturen</a>
 </body>
 </html>

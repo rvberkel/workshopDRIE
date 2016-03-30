@@ -1,12 +1,14 @@
 
 package daos;
 
+import POJO.Betaalwijze;
 import POJO.Factuur;
 import genericDao.GenericDaoImpl;
 
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
@@ -36,11 +38,18 @@ public class FactuurDao extends GenericDaoImpl<Factuur, Integer> {
 
     @Override
     public List<Factuur> readAll() {
-        Criteria criteria = createEntityCriteria(getCurrentSession());
-        //Criteria criteria = createEntityCriteria(getSession());
-        LOG.info("Started finding all klanten");
-        @SuppressWarnings("unchecked")
-        List<Factuur> results = (List<Factuur>)criteria.add(create(Factuur.class)).list();
+//        Criteria criteria = createEntityCriteria(getCurrentSession());
+//        //Criteria criteria = createEntityCriteria(getSession());
+//        LOG.info("Started finding all klanten");
+//        @SuppressWarnings("unchecked")
+//        List<Factuur> results = (List<Factuur>)criteria.add(create(Factuur.class)).list();
+//        return results;
+        
+        String query = "select * from factuur";
+        Session session = getCurrentSession();
+        SQLQuery q = session.createSQLQuery(query);
+        q.addEntity(Factuur.class);
+        List<Factuur> results = (List<Factuur>)q.list();
         return results;
     }
 }

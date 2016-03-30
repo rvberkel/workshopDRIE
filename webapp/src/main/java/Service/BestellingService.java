@@ -116,6 +116,10 @@ public class BestellingService {
         LOG.info("readFactuurOpId");
         return (Factuur) factuurDao.readEntity(factuurId);
     }
+    public List<Factuur> readAlleFacturen() {
+    	LOG.info("readAlleFacturen gestart");
+    	return(List<Factuur>)factuurDao.readAll();
+    }
     public List<Bestelling> readBestelling(Bestelling bestelling){
         LOG.info("readBestelling gestart");
         return bestellingDao.readByExample(bestelling);
@@ -409,4 +413,6 @@ public class BestellingService {
             return false;
         }
     }
+
+	
 }

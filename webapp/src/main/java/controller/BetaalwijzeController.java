@@ -34,6 +34,18 @@ public class BetaalwijzeController {
 		return "showBetaalwijze";
 	}
 	
+	@RequestMapping(value="/findBetaalwijze", method=POST)
+	public String findBetaalwijze(@RequestParam("idBetaalwijze") String betaalwijzeId, Model model){
+		betaalwijzeObject = bestelService.readBetaalWijzeOpId(Integer.parseInt(betaalwijzeId));
+		if (betaalwijzeObject != null) {
+			model.addAttribute("betaalwijze", betaalwijzeObject);
+			return "showBetaalwijze";
+		} else {
+			return "showBetaalwijzeNotFound";
+		}
+		
+	}
+	
 	@RequestMapping(value="/listbetaalwijze", method=GET) 
 	public String listBetaalwijze(Model model) {
 		List<Betaalwijze> lijst = new ArrayList<>();
@@ -75,7 +87,7 @@ public class BetaalwijzeController {
     }
 	
     @RequestMapping(value="/deleteBetaalwijze", method=RequestMethod.GET)
-    public String deleteBetaalwijze(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
+    public String deleteBetaaaaaaaaaaaaaaaaaaaaaaalwijze(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
     	int id = Integer.parseInt(idBetaalwijze);
     	Betaalwijze bw = new Betaalwijze();
     	bw.setIdBetaalwijze(id);

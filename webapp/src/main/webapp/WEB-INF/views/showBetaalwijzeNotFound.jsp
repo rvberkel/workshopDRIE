@@ -9,11 +9,7 @@
 <title>Betaalwijze pagina</title>
 </head>
 <body>
-	<h1>Gevonden betaalwijze:</h1>
-	ID in database:
-	<c:out value="${betaalwijze.idBetaalwijze}" />
-	</br> Omschrijving:
-	<c:out value="${betaalwijze.betaalwijze}" />
+	<h1>Betaalwijze niet gevonden</h1>
 </br>
 
 </br>
