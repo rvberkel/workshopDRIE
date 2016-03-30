@@ -25,11 +25,11 @@ import Service.KlantenService;
 public class AdresController {
     @Autowired
     private KlantenService klantenService;
-    int kak;
     
     @RequestMapping(value="/showCreateAdresForm", method=RequestMethod.GET)
-    public String showCreateAdresForm(Model model) {
+    public String showCreateAdresForm(Model model, @ModelAttribute("oudIdAdresType") String idAdresType) {
     	model.addAttribute("adrestypen", klantenService.readAlleAdresTypen());
+    	model.addAttribute("oudIdAdresType", idAdresType);
     	return "adres";
     }
     
@@ -38,11 +38,11 @@ public class AdresController {
     		Model model) {
     	int adresId = Integer.parseInt(idAdres);
     	int adresTypeId = Integer.parseInt(idAdresType);
-    	kak = Integer.parseInt(idAdresType);
     	model.addAttribute("adres", klantenService.readAdresOpId(adresId));
     	model.addAttribute("adrestypen", klantenService.readAlleAdresTypen());
     	AdresType oudAdresType = klantenService.readAdresTypeOpId(adresTypeId);
     	model.addAttribute("adrestype", oudAdresType);
+    	model.addAttribute("oudIdAdresType", idAdresType);
     	return "adres";
     }
     
@@ -75,29 +75,34 @@ public class AdresController {
     }
     
     @RequestMapping(value="/createOrUpdateAdres", method=RequestMethod.POST)
-    public String createOrUpdateAdres(@ModelAttribute("straatnaam") String straatnaam, 
+    public String updateAdres(@ModelAttribute("straatnaam") String straatnaam, 
     		@ModelAttribute("huisnummer") String huisnummer, @ModelAttribute("postcode") String postcode, 
-    		@ModelAttribute("woonplaats") String woonplaats, @ModelAttribute ("idAdrestype") String idAdresType, 
-    		@ModelAttribute("oudIdAdrestype") String oudIdAdresType, @RequestParam("idAdres") String idAdres, 
+    		@ModelAttribute("woonplaats") String woonplaats, @ModelAttribute("idAdrestype") String idAdresType, 
+    		@ModelAttribute("oudIdAdresType") String oudIdAdresType, @RequestParam("idAdres") String idAdres, 
     		@ModelAttribute("idKlant") String idKlant, Model model) {
-    	System.out.println(oudIdAdresType + " OF NIETS!!!");
-    	System.out.println("MAAR WEL " + idKlant + "!!!");
+    	if (oudIdAdresType.isEmpty()) {
+    		oudIdAdresType = "0";
+    	}
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
-    	//int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
     	Klant klant = klantenService.readKlantOpId(klantId);
-    	Adres adres = new Adres();
-    	AdresType oudAdresType = klantenService.readAdresTypeOpId(kak);
     	AdresType adresType = klantenService.readAdresTypeOpId(adresTypeId);
+    	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(postcode, huisnummer);
+    	Adres adres = new Adres();
+    	
     	adres.setStraatnaam(straatnaam);
     	adres.setHuisnummer(huisnummer);
     	adres.setPostcode(postcode);
     	adres.setWoonplaats(woonplaats);
-    	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(postcode, huisnummer);
-    	if (checkAdres == null && (idAdres != null || !idAdres.isEmpty())) {
+    	
+    	if (checkAdres == null && !idAdres.isEmpty()) {
+    		int adresId = Integer.parseInt(idAdres);
+    		int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
+    		AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
     		klantenService.createAdres(adres);
 			klant.addToAdressen(adres, adresType);
 			klant.removeFromAdressen(klantenService.readAdresOpId(Integer.parseInt(idAdres)), oudAdresType);
+			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
 			klantenService.updateKlant(klant);
     	}
     	else if (checkAdres == null && (idAdres == null || idAdres.isEmpty())) {
@@ -111,8 +116,12 @@ public class AdresController {
     			klantenService.updateKlant(klant);
     		}
     		else {
+    			int adresId = Integer.parseInt(idAdres);
+    			int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
+    			AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
     			klant.addToAdressen(checkAdres, adresType);
-    			klant.removeFromAdressen(klantenService.readAdresOpId(Integer.parseInt(idAdres)), adresType);
+    			klant.removeFromAdressen(klantenService.readAdresOpId(adresId), oudAdresType);
+    			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
     			klantenService.updateKlant(klant);
     		}
     	}

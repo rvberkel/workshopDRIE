@@ -76,7 +76,7 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     			+ " and adres_type_idAdres_type = " + adresTypeId;
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
-    	System.out.println(q.executeUpdate());
+    	q.executeUpdate();
     }
     
     public List<Integer> checkIfAdresIsOwned(int adresId) {

@@ -64,9 +64,10 @@ public class AdresTypeDao extends GenericDaoImpl<AdresType, Integer> implements 
     public List<AdresType> readByKlantId(int idKlant) {
     	//String query = "select * from adres_type where idAdres_type IN (select adres_type_idAdres_type "
     	//		+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
-    	String query = "select * from adres_type inner join klant_has_adres as kha on kha.adres_type_idAdres_type "
-    			+ "IN (select kha.adres_type_idAdres_type from klant_has_adres as kha where kha.adres_idAdres "
-    			+ "IN (select kha.adres_idAdres from klant_has_adres as kha where kha.klant_idKlant = " + idKlant + "))";
+    	String query = "select * from adres_type inner join klant_has_adres on klant_has_adres.adres_type_idAdres_type "
+    			+ "IN (select klant_has_adres.adres_type_idAdres_type from klant_has_adres where klant_has_adres.adres_idAdres "
+    			+ "IN (select klant_has_adres.adres_idAdres from klant_has_adres where klant_has_adres.klant_idKlant = " 
+    			+ idKlant + "))";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(AdresType.class);
