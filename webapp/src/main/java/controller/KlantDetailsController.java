@@ -35,6 +35,7 @@ public class KlantDetailsController {
 		else
 			detailsVanKlant = "details van " + voornaam + " " + tussenvoegsel + " " + achternaam;
 		model.addAttribute("detailsVanKlant", detailsVanKlant);
+		model.addAttribute("idKlant", idKlant);
 		return "listKlantDetails";
 	}
 	
