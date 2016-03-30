@@ -7,6 +7,7 @@ package daos;
 
 import POJO.Adres;
 import POJO.AdresType;
+import POJO.Klant;
 import genericDao.GenericDaoImpl;
 import interfaces.AdresTypeDaoInterface;
 
@@ -43,18 +44,29 @@ public class AdresTypeDao extends GenericDaoImpl<AdresType, Integer> implements 
 
     @Override
     public List<AdresType> readAll() {
+    	/*
         Criteria criteria = createEntityCriteria(getCurrentSession());
         //Criteria criteria = createEntityCriteria(getSession());
         LOG.info("Started finding all klanten");
         @SuppressWarnings("unchecked")
         List<AdresType> results = (List<AdresType>)criteria.add(create(AdresType.class)).list();
         return results;
+        */
+    	String query = "select * from adres_type";
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	q.addEntity(AdresType.class);
+    	List<AdresType> results = (List<AdresType>)q.list();
+    	return results;
     }
     
     @Override
     public List<AdresType> readByKlantId(int idKlant) {
-    	String query = "select * from adres_type where idAdres_type IN (select adres_type_idAdres_type "
-    			+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
+    	//String query = "select * from adres_type where idAdres_type IN (select adres_type_idAdres_type "
+    	//		+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
+    	String query = "select * from adres_type inner join klant_has_adres as kha on kha.adres_type_idAdres_type "
+    			+ "IN (select kha.adres_type_idAdres_type from klant_has_adres as kha where kha.adres_idAdres "
+    			+ "IN (select kha.adres_idAdres from klant_has_adres as kha where kha.klant_idKlant = " + idKlant + "))";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(AdresType.class);

@@ -46,3 +46,4 @@ Hibernate/BestelAppWithoutAnnotations/log/
 webapp/.settings/
 webapp/target/
 *.classpath
+webapp/log/

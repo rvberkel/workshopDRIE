@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import Helpers.DatabaseClearer;
 import Helpers.HibernateUtil;
@@ -28,6 +29,7 @@ import genericDao.GenericDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringHibernateUtil.class)
+@WebAppConfiguration
 public class BestellingDaoTest {
 	@Autowired
 	private DatabaseClearer databaseClearer;
