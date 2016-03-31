@@ -9,7 +9,7 @@
 <title>Adressen van klant</title>
 </head>
 <body>
-<p><a href="createAdres">Add Adres</a></p>
+<p><a href="showCreateAdresForm">Add Adres</a></p>
     <table border=1>
         <thead>
             <tr>
@@ -31,8 +31,8 @@
                     <td><c:out value="${adres.postcode}" /></td>
                     <td><c:out value="${adres.woonplaats}" /></td>
                     <td><c:out value="${adrestypen[adrestype.index].adres_type}" /></td>
-                    <td><a href="update?idAdres=${adres.idAdres}">Update</a></td>
-                    <td><a href="deleteAdres?idAdres=${adres.idAdres}">Delete</a></td>
+                    <td><a href="showUpdateAdresForm?idAdres=${adres.idAdres}&oudIdAdresType=${adrestypen[adrestype.index].idAdres_type}">Update</a></td>
+                    <td><a href="deleteAdres?idAdres=${adres.idAdres}&idAdresType=${adrestypen[adrestype.index].idAdres_type}">Delete</a></td>
                 </tr>
             </c:forEach>
         </tbody>

@@ -12,15 +12,38 @@
     <form ID="createOrUpdateAdres?idAdres=${adres.idAdres}" method="POST" action="/webapp/createOrUpdateAdres">
         AdresID : <input type="text" readonly="readonly" name="idAdres"
             value="<c:out value="${adres.idAdres}" />" /> <br /> 
-        Straatnaam : <input type="text" name="straatnaan"
+        Straatnaam : <input type="text" name="straatnaam"
             value="<c:out value="${adres.straatnaam}" />" /> <br /> 
         Huisnummer : <input type="text" name="huisnummer"
             value="<c:out value="${adres.huisnummer}" />" /> <br /> 
         Postcode : <input type="text" name="postcode"
             value="<c:out value="${adres.postcode}" />" /> <br /> 
         Woonplaats : <input type="text" name="woonplaats"
-			value="<c:out value="${adres.woonplaats}" />" /> <br /> <input
-            type="submit" value="Submit" />
+			value="<c:out value="${adres.woonplaats}" />" /> <br />
+		Adrestype : <table border=1>
+        				<thead>
+            				<tr>
+                				<th>keuzegetal</th>
+                				<th>adrestypeomschrijving</th>
+            				</tr>
+        				</thead>
+        				<tbody>
+        					<c:forEach items="${adrestypen}" var="adrestype">
+        						<tr>
+        							<td><c:out value="${adrestype.idAdres_type}"/></td>
+                    				<td><c:out value="${adrestype.adres_type}"/></td>
+                    			</tr>
+                    		</c:forEach>
+        				</tbody>
+    				</table>
+    				<input type="text" name="idAdrestype" 
+    					value="<c:out value="${adrestype.idAdres_type}" />" /> <br />
+					<!--  <select id="adrestypechoice">
+        				<c:forEach var="adrestype" items="${adrestypen}">
+            				<option value="${adrestype.idAdres_type}">${adrestype.adres_type}</option>
+        				</c:forEach>
+    				</select>-->
+		<input type="submit" value="Submit" />
     </form>
 </body>
 </html>

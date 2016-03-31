@@ -49,8 +49,10 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     @Override
     public List<Adres> readByKlantId(int idKlant) {
     	LOG.info("Started finding adressen based on klantId");
-    	String query = "select * from adres where idAdres IN (select adres_idAdres from klant_has_adres where klant_idKlant = " 
-    			+ idKlant + ")";
+    	//String query = "select * from adres where adres.idAdres IN (select adres_idAdres "
+    	//		+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
+    	String query = "select * from adres inner join klant_has_adres on klant_has_adres.adres_idAdres = adres.idAdres "
+    			+ "and klant_idKlant = " + idKlant;
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(Adres.class);
@@ -60,18 +62,28 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     
     @Override
     public Adres readByPostcodeAndHuisnummer(String postcode, String huisnummer) {
-    	String query = "select * from adres where postcode = " + postcode + " and huisnummer = " + huisnummer;
+    	String query = "select * from adres where postcode = '" + postcode + "' and huisnummer = '" + huisnummer + "'";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
-    	q.addEntity(Klant.class);
-    	return new Adres();
+    	q.addEntity(Adres.class);
+    	List<Adres> results = (List<Adres>)q.list();
+    	return results.get(0);
     }
     
     @Override
-    public void decoupleAdresFromKlant(int klantId, int adresId) {
-    	String query = "delete from klant_has_adres where klant_idKlant = " + klantId + " and adres_idAdres = " + adresId;
+    public void decoupleAdresFromKlant(int klantId, int adresId, int adresTypeId) {
+    	String query = "delete from klant_has_adres where klant_idKlant = " + klantId + " and adres_idAdres = " + adresId 
+    			+ " and adres_type_idAdres_type = " + adresTypeId;
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.executeUpdate();
+    }
+    
+    public List<Integer> checkIfAdresIsOwned(int adresId) {
+    	String query = "select klant_idKlant from klant_has_adres where adres_idAdres = " + adresId;
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	List<Integer> results = (List<Integer>)q.list();
+    	return results;
     }
 }

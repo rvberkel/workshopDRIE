@@ -43,8 +43,8 @@ public class KlantenService {
     //@Qualifier("AdresDao")
     AdresDao adresDao;
     @Autowired
-    @Qualifier("AdresTypeDao")
-    GenericDao adresTypeDao;
+    //@Qualifier("AdresTypeDao")
+    AdresTypeDao adresTypeDao;
    // ===== Create ======
     
     public boolean createKlant(Klant klant){
@@ -99,6 +99,7 @@ public class KlantenService {
         LOG.info("readAdres gestart");
         return (Adres)adresDao.readByExample(adres).get(0);
     }
+    
     public Adres readAdresOpId(int adresId){
         LOG.info("readAdres gestart");
         return (Adres)adresDao.readEntity(adresId);
@@ -113,6 +114,38 @@ public class KlantenService {
         LOG.info("readAlleAdressen gestart");
         return(List<Adres>)adresDao.readAll();
     }
+    
+    public List<Integer> checkIfAdresIsOwned(int adresId) {
+    	LOG.info("checking if adres is owned");
+    	return (List<Integer>)adresDao.checkIfAdresIsOwned(adresId);
+    }
+    
+    public List<AdresType> readAlleAdresTypen() {
+    	LOG.info("readAlleAdresTypen gestart");
+    	return (List<AdresType>)adresTypeDao.readAll();
+    }
+    
+    public Adres readAdresOpPostcodeEnHuisnummer(String postcode, String huisnummer) {
+    	LOG.info("readAdresOpPostcodeEnHuisnummer gestart");
+    	try {
+    		return adresDao.readByPostcodeAndHuisnummer(postcode, huisnummer);
+    	}
+    	catch (Exception ex) {
+    		ex.printStackTrace();
+    		return null;
+    	}
+    }
+    
+    public AdresType readAdresTypeOpId(int adresTypeId) {
+    	LOG.info("readAdresTypeOpId gestart");
+    	return (AdresType)adresTypeDao.readEntity(adresTypeId);
+    }
+    
+    public List<AdresType> readAdresTypeOpKlantId(int klantId) {
+    	LOG.info("readAdresTypeOpKlantId gestart");
+    	return adresTypeDao.readByKlantId(klantId);
+    }
+    
     public Account readAccountOpId(int accountId){
         LOG.info("readAccount op account id gestart");
         return (Account)accountDao.readEntity(accountId);
@@ -202,12 +235,12 @@ public class KlantenService {
         }
     }
     
-    public boolean deleteAdresFromKlant(int klantId, int adresId) {
+    public boolean deleteAdresFromKlant(int klantId, int adresId, int adresTypeId) {
     	LOG.info("verwijder adres uit klant gestart");
     	try {
-            adresDao.decoupleAdresFromKlant(klantId, adresId);
+            adresDao.decoupleAdresFromKlant(klantId, adresId, adresTypeId);
             return true;
-            } catch (HibernateException ex){
+            } catch (Exception ex){
                 LOG.error(ex.getMessage());
                 return false;
             }

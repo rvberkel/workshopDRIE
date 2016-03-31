@@ -30,7 +30,7 @@ public class ArtikelController {
     BestellingService dao;
     @Autowired
     Artikel artikel;
-    
+
 
     @RequestMapping(value = "/listArtikelen", method = RequestMethod.GET)
     public String showLijstArtikelen(Model model) {
@@ -65,8 +65,8 @@ public class ArtikelController {
             @RequestParam("idArtikel") String idArtikel, Model model) {
         //Artikel artikel = new Artikel();
     	if(errors.hasErrors()){
-    		model.addAttribute("artikelen", dao.readAllArtikel());
-    		return "listArtikelen";
+    		//model.addAttribute("artikelen", dao.readAllArtikel());
+    		return "artikel";
     	}
         artikel.setArtikelnaam(artikelnaam);
         artikel.setArtikelnummer(artikelnummer);

@@ -24,7 +24,7 @@ import Service.KlantenService;
 @SessionAttributes({"idKlant", "detailsVanKlant"})
 public class KlantDetailsController {
 	@Autowired
-	private KlantenService dao;
+	private KlantenService klantenService;
 	
 	@RequestMapping(value="/checkKlantDetails", method=RequestMethod.GET)
 	public String checkKlantDetails(@RequestParam("idKlant") String idKlant, @RequestParam("voornaam") String voornaam, 
@@ -48,8 +48,10 @@ public class KlantDetailsController {
 	@RequestMapping(value="/checkAdressen", method=RequestMethod.GET)
 	public String showAdressen(Model model, @ModelAttribute("idKlant") String idKlant) {
 		int klantId = Integer.parseInt(idKlant);
-		Klant klant = dao.readKlantOpId(klantId);
+		Klant klant = klantenService.readKlantOpId(klantId);
+		/*
 		Map<Adres, AdresType> adressen = klant.getAdressen();
+		System.out.println("AANTAL ADRESSEN VIA CHECKADRESSEN = " + adressen.size());
 		Set<Map.Entry<Adres, AdresType>> adresjes = adressen.entrySet();
 		ArrayList<Adres> ad = new ArrayList<>();
 		ArrayList<AdresType> adt = new ArrayList<>();
@@ -59,6 +61,9 @@ public class KlantDetailsController {
 		}
 		model.addAttribute("adressen", ad);
 		model.addAttribute("adrestypen", adt);
+		*/
+		model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
+		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
 		return "listAdres";
 	}
 	

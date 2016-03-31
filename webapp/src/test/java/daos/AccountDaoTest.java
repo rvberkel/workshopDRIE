@@ -27,10 +27,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)//deze klasse wordt gebruikt om de test te runnen in plaats van JUnits eigen klasse
 @ContextConfiguration(classes=SpringHibernateUtil.class)
+@WebAppConfiguration
 public class AccountDaoTest {
     private static final Logger LOG = LoggerFactory.getLogger(AccountDaoTest.class);
     

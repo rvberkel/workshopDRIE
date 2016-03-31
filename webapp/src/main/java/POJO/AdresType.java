@@ -20,17 +20,17 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "adres_type")
 public class AdresType implements Serializable{
-    private int idAdres_type;
+    private Integer idAdres_type;
     private String adres_type;
     private static String[] types = {"Bezorgadres", "Factuuradres", "Bezoekadres"};
     
     @Id
     @GeneratedValue (strategy = IDENTITY)
-    public int getIdAdres_type(){
+    public Integer getIdAdres_type(){
         return this.idAdres_type;
     }
     
-    public void setIdAdres_type(int id){
+    public void setIdAdres_type(Integer id){
         this.idAdres_type = id;
     }
     
@@ -39,7 +39,7 @@ public class AdresType implements Serializable{
         return this.adres_type;
     }
     
-    protected void setAdres_type(String adres_type){
+    public void setAdres_type(String adres_type){
         this.adres_type = adres_type;
     }
     

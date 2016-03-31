@@ -167,5 +167,9 @@ public class Klant implements java.io.Serializable {
     }
     public void removeFromAdressen(Adres adres, AdresType adresType){
         this.adressen.remove(adres, adresType);
-    } 
+    }
+    
+    public void removeFromAdressen(Adres adres) {
+    	this.adressen.remove(adres);
+    }
 }

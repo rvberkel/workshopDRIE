@@ -15,12 +15,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import Helpers.DatabaseClearer;
 import Helpers.SpringHibernateUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringHibernateUtil.class)
+@WebAppConfiguration
 public class BestellingServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(BestellingServiceTest.class);
     @Autowired
