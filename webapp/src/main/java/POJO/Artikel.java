@@ -23,25 +23,23 @@ import org.springframework.stereotype.Component;
 @Table(name = "artikel")
 public class Artikel implements java.io.Serializable {
     private Integer idArtikel;
-    @NotNull
-    @NotEmpty(message = "geef een naam in")
-    @Size(min =2, max=30, message = "naam moet tussen de 2 en 30 tekens zijn")
+    @Size(min =2, max=30, message = "geef een naam in tussen de 2 en 30 tekens")
     private String artikelnaam;
-    private double  artikelprijs;
-    @Min(1)@Max(1000)
+    @Min(0)@Max(10000)
+    private double artikelprijs;
+    @NotEmpty(message = "geef een artikelnummer in")
     private String artikelnummer;
-    @NotEmpty(message = "geef een omschrijving in")
     private String artikelomschrijving;
-    
+
     public Artikel() {
     }
-    
+
     @Id
     @GeneratedValue (strategy = IDENTITY)
     public Integer getIdArtikel() {
         return this.idArtikel;
     }
-    
+
     public void setIdArtikel(Integer idArtikel) {
         this.idArtikel = idArtikel;
     }
@@ -49,7 +47,7 @@ public class Artikel implements java.io.Serializable {
     public String getArtikelnaam() {
         return this.artikelnaam;
     }
-    
+
     public void setArtikelnaam(String artikelnaam) {
         this.artikelnaam = artikelnaam;
     }
@@ -57,7 +55,7 @@ public class Artikel implements java.io.Serializable {
     public double getArtikelprijs() {
         return this.artikelprijs;
     }
-    
+
     public void setArtikelprijs(double artikelprijs) {
         this.artikelprijs = artikelprijs;
     }
@@ -65,7 +63,7 @@ public class Artikel implements java.io.Serializable {
     public String getArtikelnummer() {
         return this.artikelnummer;
     }
-    
+
     public void setArtikelnummer(String artikelnummer) {
         this.artikelnummer = artikelnummer;
     }
@@ -73,7 +71,7 @@ public class Artikel implements java.io.Serializable {
     public String getArtikelomschrijving() {
         return this.artikelomschrijving;
     }
-    
+
     public void setArtikelomschrijving(String artikelomschrijving) {
         this.artikelomschrijving = artikelomschrijving;
     }
