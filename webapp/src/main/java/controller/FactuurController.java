@@ -30,10 +30,10 @@ public class FactuurController {
 	@Autowired
 	Betaalwijze betaalwijzeObject;
 	
+	/* ====    methodes    ==== */
 	
 	@RequestMapping(value="/listFacturen", method=GET) 
 	public String listFacuurtjes(Model model) {
-		
 		model.addAttribute("facturen", bestelService.readAlleFacturen());
     	return "listFactuur";
 	}
@@ -59,21 +59,32 @@ public class FactuurController {
 									 @RequestParam("factuurDatum") Date factuurDatum, 
 									 @RequestParam("idBestelling") String idBestelling, Model model) {
 		
-		Bestelling b = new Bestelling();
-		b.setIdBestelling(Integer.parseInt(idBestelling));
-		
 		factuurObject = new Factuur();
-		factuurObject.setFactuurDatum(factuurDatum); //een soort van Date-parser?
+		factuurObject.setFactuurDatum(factuurDatum); 
 		
-		factuurObject.setBestelling(b);  //zou kunnen valideren of bestelling bestaat
+		int bestellingId = Integer.parseInt("0" + idBestelling);
+		int factuurId = Integer.parseInt(idFactuur);
 		
-    	
-    	if (idFactuur == null || idFactuur.isEmpty())
+		//checken of de ingegeven bestelling Id wel bestaat
+		if (bestelService.readBestellingOpId(bestellingId) == null)  {
+			factuurObject.setIdFactuur(factuurId);
+			model.addAttribute("factuur", factuurObject);
+			//eigenlijk dus nog iets meegeven van een foutmelding
+			return "factuur";
+		} else {
+			Bestelling b = new Bestelling();
+			b.setIdBestelling(bestellingId);
+			factuurObject.setBestelling(b); 
+		}
+		
+		//checken voor creeeren of updaten
+		if (factuurId == 0)
     		bestelService.createFactuur(factuurObject);
     	else {
-    		factuurObject.setIdFactuur(Integer.parseInt(idFactuur));
+    		factuurObject.setIdFactuur(factuurId);
     		bestelService.updateFactuur(factuurObject);
     	}
+		
     	model.addAttribute("facturen", bestelService.readAlleFacturen());
 		
 		return "listFactuur";

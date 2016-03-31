@@ -10,6 +10,8 @@ import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -23,6 +25,10 @@ public class Betaalwijze implements Serializable {
     private Integer idBetaalwijze;
     private String betaalwijze;
     private static String[] betaalWijzes = {"Contant","Pinbetaling","iDeal","Creditcard","PayPal","AfterPay","Natura"};
+    
+    @Min(0)
+    @Max(6)
+    private int keuze;
     
     @Id
     @GeneratedValue (strategy = IDENTITY)
@@ -38,13 +44,14 @@ public class Betaalwijze implements Serializable {
     public String getBetaalwijze(){
         return this.betaalwijze;
     }
-    
+ 
     protected void setBetaalwijze(String betaalwijze){
         this.betaalwijze = betaalwijze;
     }
-    
-    public void setBetaalwijze(int betaalwijze){
-        this.betaalwijze = betaalWijzes[betaalwijze];
+        
+    public void setBetaalwijzeKeuze(int betaalwijze){
+    	keuze = betaalwijze;
+        this.betaalwijze = betaalWijzes[keuze];
     }
     @Transient
     public String[] getAllBetaalWijzes(){

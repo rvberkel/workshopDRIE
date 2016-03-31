@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,12 +26,23 @@
 	            <tr><td>6</td><td>Natura</td></tr>
         </tbody>
     </table>
-    <form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" action="/webapp/createbetaalwijze">
+     <form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" action="/webapp/createbetaalwijze">
         BetaalwijzeID : <input type="text" readonly="readonly" name="idBetaalwijze"
-            value="<c:out value="${betaalwijze.idBetaalwijze}" />" /> <br /> 
+            value="<c:out value="${betaalwijze.idBetaalwijze}" />" /> <br/> 
         Betaalwijze (voer een getal in!) : <input type="text" name="betaalwijze"
-            value="<c:out value="${betaalwijze.betaalwijze}" />" /> <br />
+            value="<c:out value="${betaalwijze.betaalwijze}" />" />
+             <br/>
 			<input type="submit" value="Submit" />
-    </form>
+    </form>  
+    <!--  
+    <sf:form method="POST" commandName="betaalwijze">
+    	BetaalwijzeID : <sf:input path="idBetaalwijze" readonly="true"/>  <br/>
+    	Betaalwijze (voor een getal in!) : <sf:input path="betaalwijze"/> 
+    								<sf:errors path="betaalwijze"/> <br/>
+    	<input type="submit" value="Submit" />
+     </sf:form>
+    -->
+    <p><a href="showListKlant">Terug naar klantenlijst</a></p>
+    <p><a href="listbetaalwijze">Terug naar betaalwijzen</a></p>
 </body>
 </html>

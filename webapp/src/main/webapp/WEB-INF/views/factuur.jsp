@@ -13,7 +13,7 @@
 <form ID="createFactuur?idFactuur=${factuur.idFactuur}" method="POST" action="/webapp/createfactuur">
         ID-Factuur : 
         <input type="text" readonly="readonly" name="idFactuur" value="<c:out value="${factuur.idFactuur}" />" /> <br /> 
-          Factuurdatum (DD/MM/JJJJ): 
+          Factuurdatum (JJJJ/MM/DD): 
         <fmt:formatDate var="fmtDate" value="${factuur.factuurDatum}" pattern="yyyy/MM/dd"/>
         <input type="text" name="factuurDatum" value="<c:out value="${fmtDate}" />" /> <br /> 
         Bijbehorende bestelling : 

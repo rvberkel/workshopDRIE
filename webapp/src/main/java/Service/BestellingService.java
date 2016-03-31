@@ -256,7 +256,7 @@ public class BestellingService {
     public boolean updateBetaalwijze(int id, int betaalWijze){
         try {
             Betaalwijze betaalwijze = (Betaalwijze) betaalwijzeDao.readEntity(id);
-            betaalwijze.setBetaalwijze(betaalWijze);
+            betaalwijze.setBetaalwijzeKeuze(betaalWijze);
             betaalwijzeDao.updateEntity(betaalwijze);
         }
         catch(HibernateException he){
