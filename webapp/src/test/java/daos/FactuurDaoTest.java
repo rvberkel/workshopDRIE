@@ -137,7 +137,7 @@ public class FactuurDaoTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         
-        bw.setBetaalwijze(0);
+        bw.setBetaalwijzeKeuze(0);
         session.save(bw);
         
         bet1.setBetaalDatum(new Timestamp(date.getTime()));

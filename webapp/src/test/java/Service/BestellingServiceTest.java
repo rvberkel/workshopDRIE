@@ -95,7 +95,7 @@ public class BestellingServiceTest {
         betaling.setBetaalwijze(betaalwijze);
         betaling.setBetalingsGegevens("ik betaal niet");
         
-        betaalwijze.setBetaalwijze(0);
+        betaalwijze.setBetaalwijzeKeuze(0);
         bestellingService.createBetaalwijze(betaalwijze);
         
         betaling.setKlant(klant);

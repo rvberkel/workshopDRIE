@@ -91,7 +91,7 @@ public class BetalingDaoTest {
         session.save(f1);
         f1.setIdFactuur(1);
         
-        bw.setBetaalwijze(0);
+        bw.setBetaalwijzeKeuze(0);
         session.save(bw);
         bw.setIdBetaalwijze(1);
                 

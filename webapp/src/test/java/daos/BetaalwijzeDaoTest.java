@@ -40,7 +40,7 @@ public class BetaalwijzeDaoTest {
     @Before
     public void setUp() {
     	dbClearer.clearDatabase();
-    	contantBetalen.setBetaalwijze(0);
+    	contantBetalen.setBetaalwijzeKeuze(0);
     }
     
     @After
@@ -73,7 +73,7 @@ public class BetaalwijzeDaoTest {
     public void testUpdateBetaalwijze() {
     	int betaalwijze = 1;
         betaalwijzeDao.createEntity(contantBetalen);
-        contantBetalen.setBetaalwijze(betaalwijze);
+        contantBetalen.setBetaalwijzeKeuze(betaalwijze);
         betaalwijzeDao.updateEntity(contantBetalen);
         Betaalwijze updatedBetaalwijze = (Betaalwijze)betaalwijzeDao.readEntity(contantBetalen.getIdBetaalwijze());
         assertEquals(updatedBetaalwijze.getBetaalwijze(), contantBetalen.getBetaalwijze());

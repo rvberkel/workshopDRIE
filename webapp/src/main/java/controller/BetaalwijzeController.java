@@ -59,24 +59,24 @@ public class BetaalwijzeController {
 	
 	@RequestMapping(value="/createbetaalwijze", method=RequestMethod.GET)
     public String showCreateBetaalwijzeForm() {		
-    	return "betaalwijze";
+    	return "betaalwijzeForm";
     }
 	
 	@RequestMapping(value="/createbetaalwijze", method=RequestMethod.POST)
-	public String processBetaalwijze(@Valid Betaalwijze betaalwijzeObj, Errors errors,
+	public String processBetaalwijze(//@Valid Betaalwijze betaalwijzeObj, Errors errors,
 									@RequestParam("betaalwijze") String betaalwijze,
 						    		@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
 //		Dit werkt helaas nog niet goed
-		if (errors.hasErrors()) {
-			return "betaalwijze";
-		}
-		
-//		if (Integer.parseInt(betaalwijze) > 6 || Integer.parseInt(betaalwijze) < 0 ) {
-//			return "betaalwijze";  //lomp, maar t werkt
-//			//als je update hebt gedaan, en een ongeldig getal invult, dan is het id-veld leeg bij de re-try...
+//		if (errors.hasErrors()) {
+//			return "betaalwijzeForm";
 //		}
 		
-    	betaalwijzeObject = new Betaalwijze();
+		if (Integer.parseInt(betaalwijze) > 6 || Integer.parseInt(betaalwijze) < 0 ) {
+			return "betaalwijzeForm";  //lomp, maar t werkt
+			//als je update hebt gedaan, en een ongeldig getal invult, dan is het id-veld leeg bij de re-try...
+		}
+		
+    	betaalwijzeObject = new Betaalwijze(); //deze misschien wel weghalen
     	betaalwijzeObject.setBetaalwijzeKeuze(Integer.parseInt(betaalwijze)); 
     	
     	if (idBetaalwijze == null || idBetaalwijze.isEmpty() || Integer.parseInt(idBetaalwijze) == 0)
@@ -105,6 +105,6 @@ public class BetaalwijzeController {
     	int idBetaawijze = Integer.parseInt(idBetaalwijze);
     	betaalwijzeObject = bestelService.readBetaalWijzeOpId(idBetaawijze);
     	model.addAttribute("betaalwijze", betaalwijzeObject);
-    	return "betaalwijze";
+    	return "betaalwijzeForm";
     }
 }

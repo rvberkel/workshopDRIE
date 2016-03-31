@@ -26,6 +26,7 @@
 	            <tr><td>6</td><td>Natura</td></tr>
         </tbody>
     </table>
+    <!--   
      <form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" action="/webapp/createbetaalwijze">
         BetaalwijzeID : <input type="text" readonly="readonly" name="idBetaalwijze"
             value="<c:out value="${betaalwijze.idBetaalwijze}" />" /> <br/> 
@@ -34,14 +35,17 @@
              <br/>
 			<input type="submit" value="Submit" />
     </form>  
-    <!--  
-    <sf:form method="POST" commandName="betaalwijze">
-    	BetaalwijzeID : <sf:input path="idBetaalwijze" readonly="true"/>  <br/>
-    	Betaalwijze (voor een getal in!) : <sf:input path="betaalwijze"/> 
-    								<sf:errors path="betaalwijze"/> <br/>
+     -->
+      
+    <sf:form ID="createBetaalwijze?idBetaalwijze=${betaalwijze.idBetaalwijze}" method="POST" 
+    action="/webapp/createbetaalwijze" commandName = "betaalwijze">
+	
+		<sf:hidden path="idBetaalwijze"/>
+    	Betaalwijze (voer een getal in!) : <sf:input path="betaalwijze"/> 
+    						<!-- <sf:errors path="betaalwijze"/> <br/> -->		
     	<input type="submit" value="Submit" />
      </sf:form>
-    -->
+    
     <p><a href="showListKlant">Terug naar klantenlijst</a></p>
     <p><a href="listbetaalwijze">Terug naar betaalwijzen</a></p>
 </body>
