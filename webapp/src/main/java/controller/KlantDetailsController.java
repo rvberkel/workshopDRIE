@@ -51,19 +51,6 @@ public class KlantDetailsController {
 	public String showAdressen(Model model, @ModelAttribute("idKlant") String idKlant) {
 		int klantId = Integer.parseInt(idKlant);
 		Klant klant = klantenService.readKlantOpId(klantId);
-		/*
-		Map<Adres, AdresType> adressen = klant.getAdressen();
-		System.out.println("AANTAL ADRESSEN VIA CHECKADRESSEN = " + adressen.size());
-		Set<Map.Entry<Adres, AdresType>> adresjes = adressen.entrySet();
-		ArrayList<Adres> ad = new ArrayList<>();
-		ArrayList<AdresType> adt = new ArrayList<>();
-		for(Map.Entry<Adres, AdresType> adresje: adresjes){
-			ad.add(adresje.getKey());
-			adt.add(adresje.getValue());
-		}
-		model.addAttribute("adressen", ad);
-		model.addAttribute("adrestypen", adt);
-		*/
 		model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
 		return "listAdres";

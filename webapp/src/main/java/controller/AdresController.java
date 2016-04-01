@@ -52,24 +52,10 @@ public class AdresController {
     	int adresId = Integer.parseInt(idAdres);
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
-    	System.out.println("ATTENTIE! ADRESID: " + adresId + " KLANTID: " + klantId + " ADRESTYPEID: " + adresTypeId);
     	klantenService.deleteAdresFromKlant(klantId, adresId, adresTypeId);
     	if (klantenService.checkIfAdresIsOwned(adresId).size() == 0)
     		klantenService.deleteAdresById(adresId);
     	Klant klant = klantenService.readKlantOpId(klantId);
-    	/*
-		Map<Adres, AdresType> adressen = klant.getAdressen();
-		System.out.println("AANTAL ADRESEEN VIA DELETE = " + adressen.size());
-		Set<Map.Entry<Adres, AdresType>> adresjes = adressen.entrySet();
-		ArrayList<Adres> ad = new ArrayList<>();
-		ArrayList<AdresType> adt = new ArrayList<>();
-		for(Map.Entry<Adres, AdresType> adresje: adresjes){
-			ad.add(adresje.getKey());
-			adt.add(adresje.getValue());
-		}
-		model.addAttribute("adressen", ad);
-		model.addAttribute("adrestypen", adt);
-		*/
     	model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
 		return "listAdres";
@@ -113,20 +99,6 @@ public class AdresController {
     			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
     		}
     	}
-    	
-    	/*
-		Map<Adres, AdresType> adressen = klant.getAdressen();
-		System.out.println("AANTAL ADRESSEN VIA CREATEORUPDATE = " + adressen.size());
-		Set<Map.Entry<Adres, AdresType>> adresjes = adressen.entrySet();
-		ArrayList<Adres> ad = new ArrayList<>();
-		ArrayList<AdresType> adt = new ArrayList<>();
-		for(Map.Entry<Adres, AdresType> adresje: adresjes){
-			ad.add(adresje.getKey());
-			adt.add(adresje.getValue());
-		}
-		model.addAttribute("adressen", ad);
-		model.addAttribute("adrestypen", adt);
-		*/
     	model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
     	return "listAdres";
