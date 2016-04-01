@@ -16,8 +16,8 @@
             <tr>
                 <th>BestellingID</th>
                 <th>Klant ID</th>
-               <!-- <th>Artikelaantal</th> -->
-                <!-- <th>Totaalprijs</th> -->
+                <th>Artikelaantal</th>
+                <th>Totaalprijs</th> 
                 <th colspan=3>Action</th>
             </tr>
         </thead>
@@ -26,6 +26,9 @@
                 <tr>
                     <td><c:out value="${bestelling.idBestelling}"/></td>
                     <td><c:out value="${bestelling.klant.idKlant}"/></td>
+                    <td></td>
+                    <td></td>
+                    
                     <td><a href="showUpdateBestelling?idBestelling=${bestelling.idBestelling}">Update</a></td>
                     <td><a href="deleteBestelling?idBestelling=${bestelling.idBestelling}">Delete</a></td>
                 </tr>

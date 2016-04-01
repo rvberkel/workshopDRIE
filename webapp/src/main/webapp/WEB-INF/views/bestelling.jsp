@@ -18,52 +18,30 @@
 		<table ID="artikelTabel" border=1>
 			<thead>
 				<tr>
-					<th>Artikel ID</th>
-					<th>Artikelnummer</th>
-					<th>Stukprijs</th>
-					<th>Aantal</th>
+					<th>Naam</th> <th>Artikel ID</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				
 					<c:forEach items="${artikelen}" var="artikel" >
-						<td><sf:hidden path="idArtikel" /></td>
-						<td><sf:label path="artikelnummer" />
-							<sf:errors path="artikelnummer" cssErrorClass="errors" /></td>
-						<td><sf:label path="artikelprijs" />
-							<sf:errors path="artikelprijs" /></td>
+				<tr>	
+					<td><c:out value="${artikel.artikelnaam}"/></td>
+					<td><c:out value="${artikel.idArtikel}" /></td>
+					<td><c:out value="${artikel.artikelnummer}"/></td>
+					<td><c:out value="${artikel.artikelprijs }" /></td>
+					<td><input type="text" name="aantal" value="${aantal}"/></td>
+					
+					<!--  
+						<td><sf:input path="artikelnummer" /> <sf:errors path="artikelnummer" cssErrorClass="errors" /></td>
+						<td><sf:input path="artikelprijs" /> <sf:errors path="artikelprijs" /></td>					-->
+					</tr>
+					
 					</c:forEach>
-				<!-- 	<td> <sf:input path="aantal"
-						value="<sf:out value="aantal" />" />
-					<br />  -->
-				</tr>
-
-
 			</tbody>
 		</table>
-		<input type="submit" value="Submit" />
+		<input type="submit" value="Buy! Buy! Buy!" />
 	</sf:form>
 
 
-	<!--
-	<sf:form ID="createArtikel?idArtikel=${artikel.idArtikel}"
-		method="POST" action="/webapp/createArtikel" commandName="artikel">
-		   <sf:hidden path="idArtikel" />
- 	Naam*: <sf:input path="artikelnaam" />
-		<sf:errors path="artikelnaam" cssClass="errors" />
-		<br />
-   Prijs*: <sf:input path="artikelprijs" />
-		<sf:errors path="artikelprijs" />
-		<br />
-   Nummer*: <sf:input path="artikelnummer" />
-		<sf:errors path="artikelnummer" cssErrorClass="errors" />
-		<br>
-   Omschrijving: <sf:input path="artikelomschrijving" />
-		<sf:errors path="artikelomschrijving" />
-		<br />
-   *verplicht veld
-   <input type="submit" value="Submit" />
-	</sf:form>
--->
 </body>
 </html>

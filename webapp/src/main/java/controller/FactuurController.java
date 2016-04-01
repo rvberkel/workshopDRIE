@@ -97,4 +97,14 @@ public class FactuurController {
     	model.addAttribute("factuur", factuurObject);
     	return "factuur";
     }
+	
+	@RequestMapping(value="/deleteFactuur", method=RequestMethod.GET)
+	public String deleteFactuur(@RequestParam("idFactuur") String idFactuur, Model model) {
+    	Factuur f = new Factuur();
+    	f.setIdFactuur(Integer.parseInt(idFactuur));
+    	bestelService.deleteFactuur(f);
+    	
+    	model.addAttribute("facturen", bestelService.readAlleFacturen());
+    	return "listFactuur";
+	}
 }

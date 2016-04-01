@@ -89,8 +89,16 @@ public class BetaalwijzeController {
     	return "listBetaalwijze";
     }
 	
+    @RequestMapping(value="/updateBetaalwijze", method=RequestMethod.GET)
+    public String showUpdateBetaalForm(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
+    	int idBetaawijze = Integer.parseInt(idBetaalwijze);
+    	betaalwijzeObject = bestelService.readBetaalWijzeOpId(idBetaawijze);
+    	model.addAttribute("betaalwijze", betaalwijzeObject);
+    	return "betaalwijzeForm";
+    }
+    
     @RequestMapping(value="/deleteBetaalwijze", method=RequestMethod.GET)
-    public String deleteBetaaaaaaaaaaaaaaaaaaaaaaalwijze(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
+    public String deleteBetaalwijze(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
     	int id = Integer.parseInt(idBetaalwijze);
     	Betaalwijze bw = new Betaalwijze();
     	bw.setIdBetaalwijze(id);
@@ -98,13 +106,5 @@ public class BetaalwijzeController {
     	
     	model.addAttribute("betaalwijzen", bestelService.readAlleBetaalwijzen());
     	return "listBetaalwijze";
-    }
-    
-    @RequestMapping(value="/updateBetaalwijze", method=RequestMethod.GET)
-    public String showUpdateBetaalForm(@RequestParam("idBetaalwijze") String idBetaalwijze, Model model) {
-    	int idBetaawijze = Integer.parseInt(idBetaalwijze);
-    	betaalwijzeObject = bestelService.readBetaalWijzeOpId(idBetaawijze);
-    	model.addAttribute("betaalwijze", betaalwijzeObject);
-    	return "betaalwijzeForm";
     }
 }
