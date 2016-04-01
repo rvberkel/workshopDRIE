@@ -10,7 +10,7 @@
 </head>
 <body>
     <p><a href="showCreateKlantForm">Add Klant</a></p>
-  <h1><c:out value="${welcomeMessage}" /></h1>
+  
     <table border=1>
         <thead>
             <tr>
@@ -39,6 +39,7 @@
     </table> 
     <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> |
     <a href="<c:url value="/listArtikelen" />">Alle Artikelen</a> |
-    <a href="<c:url value="/listFacturen" />">Alle Facturen</a>
+    <a href="<c:url value="/listFacturen" />">Alle Facturen</a> <br>
+    <p><a href="welkom">Terug naar het begin</a></p>
 </body>
 </html>

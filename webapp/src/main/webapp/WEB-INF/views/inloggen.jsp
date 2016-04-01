@@ -9,7 +9,7 @@
 </head>
 <body>
      <p><a href="createLogin">Create User</a></p>
-    <form method="POST" action="/webapp/listKlant"> <!--action='LoginController' name="frmLogin"-->
+    <form method="POST" action="/webapp/welkom"> <!--action='LoginController' name="frmLogin"-->
         Inlognaam : <input type="text" name="inlognaam"/><br /> 
         Wachtwoord : <input type="password" name="inlogwachtwoord"/> <br /> 
         <input type="submit" value="Submit" />

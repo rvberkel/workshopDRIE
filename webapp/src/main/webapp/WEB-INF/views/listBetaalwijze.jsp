@@ -34,5 +34,6 @@
     </br>
     <a href="<c:url value="/showListKlant" />">Terug naar Klantenlijst (c:url manier)</a></br>
     <a href="showListKlant">Terug naar klantenlijst (normale manier)</a>
+    <p><a href="welkom">Terug naar het begin</a></p>
 </body>
 </html>

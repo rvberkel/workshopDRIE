@@ -22,6 +22,7 @@
         </thead>
     </table>
     <p><a href="showListKlant">Terug naar klantenlijst</a></p>
+    <p><a href="welkom">Terug naar het begin</a></p>
 <body>
 </body>
 </html>

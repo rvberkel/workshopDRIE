@@ -29,7 +29,7 @@ public class LoginController {
 		return "inloggen";
 	}
 	
-	@RequestMapping(value="/listKlant", method=RequestMethod.POST)
+	@RequestMapping(value="/welkom", method=RequestMethod.POST)
 	public String login(@ModelAttribute("inlognaam") String inlognaam, @ModelAttribute("inlogwachtwoord") String inlogwachtwoord, 
 			Model model) {
 		//Map<String, Object> modelMap = model.asMap();
@@ -38,9 +38,9 @@ public class LoginController {
         String welcomeMessage = "Welcome" + " " + inlognaam + "!";
         if(validator.checkUser(inlognaam, inlogwachtwoord))
         {
-        	model.addAttribute("klanten", dao.readAlleKlanten());
+//        	model.addAttribute("klanten", dao.readAlleKlanten());
     		model.addAttribute("welcomeMessage", welcomeMessage);
-    		return "listKlant";
+    		return "welkom";
         }
         else
         {

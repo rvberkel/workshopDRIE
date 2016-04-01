@@ -38,11 +38,7 @@
     				</table>
     				<input type="text" name="idAdrestype" 
     					value="<c:out value="${adrestype.idAdres_type}" />" /> <br />
-					<!--  <select id="adrestypechoice">
-        				<c:forEach var="adrestype" items="${adrestypen}">
-            				<option value="${adrestype.idAdres_type}">${adrestype.adres_type}</option>
-        				</c:forEach>
-    				</select>-->
+
 		<input type="submit" value="Submit" />
     </form>
 </body>

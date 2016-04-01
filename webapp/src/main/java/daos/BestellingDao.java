@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import POJO.Bestelling;
+import POJO.Factuur;
 import genericDao.GenericDaoImpl;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowire;
@@ -36,11 +38,11 @@ public class BestellingDao extends GenericDaoImpl<Bestelling, Integer> {
 
     @Override
     public List<Bestelling> readAll() {
-        Criteria criteria = createEntityCriteria(getCurrentSession());
-        //Criteria criteria = createEntityCriteria(getSession());
-        LOG.info("Started finding all klanten");
-        @SuppressWarnings("unchecked")
-        List<Bestelling> results = (List<Bestelling>)criteria.add(create(Bestelling.class)).list();
+        String query = "select * from bestelling";
+        Session session = getCurrentSession();
+        SQLQuery q = session.createSQLQuery(query);
+        q.addEntity(Bestelling.class);
+        List<Bestelling> results = (List<Bestelling>)q.list();
         return results;
     }
 }

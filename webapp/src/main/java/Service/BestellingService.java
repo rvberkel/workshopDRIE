@@ -128,6 +128,10 @@ public class BestellingService {
         LOG.info("readBestellingOpId gestart");
         return (Bestelling) bestellingDao.readEntity(bestellingId);
     }
+    public List<Bestelling> readAlleBestellingen(){
+    	LOG.info("read alle bestellingen gestart");
+    	return (List<Bestelling>)bestellingDao.readAll();
+    }
     
     public List<BestellingHasArtikel> readBestellingHasArtikel(BestellingHasArtikel bestellingHasArtikel){
         LOG.info("readBestellingHasArtikel gestart");
