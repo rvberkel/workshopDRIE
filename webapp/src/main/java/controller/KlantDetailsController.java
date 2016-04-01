@@ -21,7 +21,7 @@ import POJO.Klant;
 import Service.KlantenService;
 
 @Controller
-@SessionAttributes({"idKlant", "detailsVanKlant"})
+@SessionAttributes({"idKlant", "detailsVanKlant", "oudIdAdresType"})
 public class KlantDetailsController {
 	@Autowired
 	private KlantenService klantenService;
@@ -36,12 +36,14 @@ public class KlantDetailsController {
 			detailsVanKlant = "details van " + voornaam + " " + tussenvoegsel + " " + achternaam;
 		model.addAttribute("detailsVanKlant", detailsVanKlant);
 		model.addAttribute("idKlant", idKlant);
+		model.addAttribute("oudIdAdresType", 0);
 		return "listKlantDetails";
 	}
 	
 	@RequestMapping(value="/showKlantDetails", method=RequestMethod.GET)
 	public String showKlantDetails(Model model) {
 		model.addAttribute("detailsVanKlant");
+		model.addAttribute("oudIdAdresType", 0);
 		return "listKlantDetails";
 	}
 	

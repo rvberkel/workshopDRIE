@@ -62,12 +62,9 @@ public class AdresTypeDao extends GenericDaoImpl<AdresType, Integer> implements 
     
     @Override
     public List<AdresType> readByKlantId(int idKlant) {
-    	//String query = "select * from adres_type where idAdres_type IN (select adres_type_idAdres_type "
-    	//		+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
-    	String query = "select * from adres_type inner join klant_has_adres on klant_has_adres.adres_type_idAdres_type "
-    			+ "IN (select klant_has_adres.adres_type_idAdres_type from klant_has_adres where klant_has_adres.adres_idAdres "
-    			+ "IN (select klant_has_adres.adres_idAdres from klant_has_adres where klant_has_adres.klant_idKlant = " 
-    			+ idKlant + "))";
+    	String query = "select * from adres_type inner join klant_has_adres on klant_has_adres.adres_type_idAdres_type = "
+    			+ "adres_type.idAdres_type and klant_has_adres.klant_idKlant = "
+    			+ idKlant + " order by klant_has_adres.adres_idAdres";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(AdresType.class);

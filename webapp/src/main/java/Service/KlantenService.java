@@ -246,6 +246,17 @@ public class KlantenService {
             }
     }
     
+    public boolean addAdresToKlant(int klantId, int adresId, int adresTypeId) {
+    	LOG.info("toevoegen adres aan klant gestart");
+    	try {
+            adresDao.coupleAdresWithKlant(klantId, adresId, adresTypeId);
+            return true;
+            } catch (Exception ex){
+                LOG.error(ex.getMessage());
+                return false;
+            }
+    }
+    
     public boolean deleteAccount(Account account){
         LOG.info("delete account gestart");
         try{

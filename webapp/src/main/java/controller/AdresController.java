@@ -52,6 +52,7 @@ public class AdresController {
     	int adresId = Integer.parseInt(idAdres);
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
+    	System.out.println("ATTENTIE! ADRESID: " + adresId + " KLANTID: " + klantId + " ADRESTYPEID: " + adresTypeId);
     	klantenService.deleteAdresFromKlant(klantId, adresId, adresTypeId);
     	if (klantenService.checkIfAdresIsOwned(adresId).size() == 0)
     		klantenService.deleteAdresById(adresId);
@@ -80,13 +81,8 @@ public class AdresController {
     		@ModelAttribute("woonplaats") String woonplaats, @ModelAttribute("idAdrestype") String idAdresType, 
     		@ModelAttribute("oudIdAdresType") String oudIdAdresType, @RequestParam("idAdres") String idAdres, 
     		@ModelAttribute("idKlant") String idKlant, Model model) {
-    	if (oudIdAdresType.isEmpty()) {
-    		oudIdAdresType = "0";
-    	}
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
-    	Klant klant = klantenService.readKlantOpId(klantId);
-    	AdresType adresType = klantenService.readAdresTypeOpId(adresTypeId);
     	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(postcode, huisnummer);
     	Adres adres = new Adres();
     	
@@ -98,33 +94,26 @@ public class AdresController {
     	if (checkAdres == null && !idAdres.isEmpty()) {
     		int adresId = Integer.parseInt(idAdres);
     		int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
-    		AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
     		klantenService.createAdres(adres);
-			klant.addToAdressen(adres, adresType);
-			klant.removeFromAdressen(klantenService.readAdresOpId(Integer.parseInt(idAdres)), oudAdresType);
+			klantenService.addAdresToKlant(klantId, adres.getIdAdres(), adresTypeId);
 			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
-			klantenService.updateKlant(klant);
     	}
     	else if (checkAdres == null && (idAdres == null || idAdres.isEmpty())) {
     		klantenService.createAdres(adres);
-			klant.addToAdressen(adres, adresType);
-			klantenService.updateKlant(klant);
+			klantenService.addAdresToKlant(klantId, adres.getIdAdres(), adresTypeId);
     	}
-    	else {
+    	else if (checkAdres != null) {
     		if (idAdres == null || idAdres.isEmpty()) {
-    			klant.addToAdressen(checkAdres, adresType);
-    			klantenService.updateKlant(klant);
+    			klantenService.addAdresToKlant(klantId, checkAdres.getIdAdres(), adresTypeId);
     		}
     		else {
     			int adresId = Integer.parseInt(idAdres);
     			int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
-    			AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
-    			klant.addToAdressen(checkAdres, adresType);
-    			klant.removeFromAdressen(klantenService.readAdresOpId(adresId), oudAdresType);
+    			klantenService.addAdresToKlant(klantId, checkAdres.getIdAdres(), adresTypeId);
     			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
-    			klantenService.updateKlant(klant);
     		}
     	}
+    	
     	/*
 		Map<Adres, AdresType> adressen = klant.getAdressen();
 		System.out.println("AANTAL ADRESSEN VIA CREATEORUPDATE = " + adressen.size());

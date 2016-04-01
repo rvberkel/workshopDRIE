@@ -9,4 +9,5 @@ public interface AdresDaoInterface {
 	public Adres readByPostcodeAndHuisnummer(String postcode, String huisnummer);
 	public List<Integer> checkIfAdresIsOwned(int adresId);
 	public void decoupleAdresFromKlant(int klantId, int adresId, int adresTypeId);
+	void coupleAdresWithKlant(int klantId, int adresId, int adresTypeId);
 }

@@ -35,8 +35,8 @@ public class AdresDaoTest {
     //@Qualifier("AdresDao")
 	AdresDao adresDao;
 	@Autowired
-	@Qualifier("AdresTypeDao")
-	GenericDao adresTypeDao;
+	//@Qualifier("AdresTypeDao")
+	AdresTypeDao adresTypeDao;
 	@Autowired
 	Klant klant;
 	@Autowired
@@ -57,7 +57,7 @@ public class AdresDaoTest {
     KlantenService klantenService;
 	@Autowired
 	private DatabaseClearer databaseClearer;
-	/*
+	
 	@Before
 	public void clearDatabase() {
 		databaseClearer.clearDatabase();
@@ -98,7 +98,7 @@ public class AdresDaoTest {
         klantenService.createKlant(klant);
         klantenService.createKlant(klant2);
 	}
-	*/
+	
 	/*
 	@Test
 	public void adresDaoShouldAddAdres() {
@@ -118,8 +118,17 @@ public class AdresDaoTest {
 		assertEquals("101", adres4.getHuisnummer());
 	}
 	*/
+	/*
 	@Test
 	public void testReadAdresMetAdresTypeOpAdresId() {
-		
+	}
+	*/
+	@Test
+	public void testReadAdresTypeOpKlantId() {
+		adresDao.coupleAdresWithKlant(klant2.getIdKlant(), adres.getIdAdres(), adresType.getIdAdres_type());
+		List<AdresType> adrestypen = adresTypeDao.readByKlantId(2);
+		List<Adres> adressen = adresDao.readByKlantId(2);
+		assertEquals(4, adrestypen.size());
+		assertEquals(4, adressen.size());
 	}
 }

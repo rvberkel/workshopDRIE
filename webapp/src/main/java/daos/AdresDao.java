@@ -49,10 +49,8 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     @Override
     public List<Adres> readByKlantId(int idKlant) {
     	LOG.info("Started finding adressen based on klantId");
-    	//String query = "select * from adres where adres.idAdres IN (select adres_idAdres "
-    	//		+ "from klant_has_adres where klant_idKlant = " + idKlant + ")";
     	String query = "select * from adres inner join klant_has_adres on klant_has_adres.adres_idAdres = adres.idAdres "
-    			+ "and klant_idKlant = " + idKlant;
+    			+ "and klant_idKlant = " + idKlant + " order by klant_has_adres.adres_idAdres asc";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.addEntity(Adres.class);
@@ -74,6 +72,15 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     public void decoupleAdresFromKlant(int klantId, int adresId, int adresTypeId) {
     	String query = "delete from klant_has_adres where klant_idKlant = " + klantId + " and adres_idAdres = " + adresId 
     			+ " and adres_type_idAdres_type = " + adresTypeId;
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	q.executeUpdate();
+    }
+    
+    @Override
+    public void coupleAdresWithKlant(int klantId, int adresId, int adresTypeId) {
+    	String query = "insert into klant_has_adres (adres_idAdres, adres_type_idAdres_type, klant_idKlant) "
+    			+ "values (" + adresId + ", " + adresTypeId + ", " + klantId + ")";
     	Session session = getCurrentSession();
     	SQLQuery q = session.createSQLQuery(query);
     	q.executeUpdate();
