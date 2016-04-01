@@ -10,6 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "adres_type")
 public class AdresType implements Serializable{
+	@NotNull
     private Integer idAdres_type;
     private String adres_type;
     private static String[] types = {"Bezorgadres", "Factuuradres", "Bezoekadres"};

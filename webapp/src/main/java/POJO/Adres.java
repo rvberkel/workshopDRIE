@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -17,9 +19,17 @@ import org.springframework.stereotype.Component;
 @Table(name = "adres")
 public class Adres implements java.io.Serializable {
     private Integer idAdres;
+    @NotNull
+    @Size(min=2, max=45)
     private String straatnaam;
+    @NotNull
+    @Size(min=6, max=6)
     private String postcode;
+    @NotNull
+    @Size(min=1, max=11)
     private String huisnummer;
+    @NotNull
+    @Size(min=3, max=45)
     private String woonplaats;
 
     public Adres() {

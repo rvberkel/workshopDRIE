@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,8 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import POJO.Adres;
 import POJO.AdresType;
+import POJO.Artikel;
 import POJO.Klant;
 import Service.KlantenService;
+import springCommandObjects.AdresWithAdrestype;
 
 @Controller
 @SessionAttributes({"idKlant", "oudIdAdresType"})
@@ -62,15 +67,23 @@ public class AdresController {
     }
     
     @RequestMapping(value="/createOrUpdateAdres", method=RequestMethod.POST)
-    public String updateAdres(@ModelAttribute("straatnaam") String straatnaam, 
+    public String updateAdres(@Valid Adres adres, Errors errors, @ModelAttribute("straatnaam") String straatnaam, 
     		@ModelAttribute("huisnummer") String huisnummer, @ModelAttribute("postcode") String postcode, 
     		@ModelAttribute("woonplaats") String woonplaats, @ModelAttribute("idAdrestype") String idAdresType, 
     		@ModelAttribute("oudIdAdresType") String oudIdAdresType, @RequestParam("idAdres") String idAdres, 
     		@ModelAttribute("idKlant") String idKlant, Model model) {
+    	if(errors.hasErrors()){
+    		int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
+    		AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
+    		model.addAttribute("adrestypen", klantenService.readAlleAdresTypen());
+        	model.addAttribute("adrestype", oudAdresType);
+        	model.addAttribute("oudIdAdresType", oudAdresTypeId);
+    		return "adres";
+    	}
+    	
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
     	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(postcode, huisnummer);
-    	Adres adres = new Adres();
     	
     	adres.setStraatnaam(straatnaam);
     	adres.setHuisnummer(huisnummer);
