@@ -9,6 +9,7 @@
 <title>Adressen van klant</title>
 </head>
 <body>
+<h1><c:out value="${adressenVanKlant}" /></h1>
 <p><a href="showCreateAdresForm">Add Adres</a></p>
     <table border=1>
         <thead>

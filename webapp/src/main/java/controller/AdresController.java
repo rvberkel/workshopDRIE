@@ -26,7 +26,7 @@ import Service.KlantenService;
 import springCommandObjects.AdresWithAdrestype;
 
 @Controller
-@SessionAttributes({"idKlant", "oudIdAdresType"})
+@SessionAttributes({"idKlant", "oudIdAdresType", "adressenVanKlant"})
 public class AdresController {
     @Autowired
     private KlantenService klantenService;
@@ -63,6 +63,7 @@ public class AdresController {
     	Klant klant = klantenService.readKlantOpId(klantId);
     	model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
+		model.addAttribute("adressenVanKlant");
 		return "listAdres";
     }
     
@@ -96,6 +97,8 @@ public class AdresController {
     		klantenService.createAdres(adres);
 			klantenService.addAdresToKlant(klantId, adres.getIdAdres(), adresTypeId);
 			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
+			if (klantenService.checkIfAdresIsOwned(adresId).size() == 0)
+	    		klantenService.deleteAdresById(adresId);
     	}
     	else if (checkAdres == null && (idAdres == null || idAdres.isEmpty())) {
     		klantenService.createAdres(adres);
@@ -110,10 +113,13 @@ public class AdresController {
     			int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
     			klantenService.addAdresToKlant(klantId, checkAdres.getIdAdres(), adresTypeId);
     			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
+    			if (klantenService.checkIfAdresIsOwned(adresId).size() == 0)
+    	    		klantenService.deleteAdresById(adresId);
     		}
     	}
     	model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
+		model.addAttribute("adressenVanKlant");
     	return "listAdres";
     }
 }

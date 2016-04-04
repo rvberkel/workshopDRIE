@@ -21,7 +21,7 @@ import POJO.Klant;
 import Service.KlantenService;
 
 @Controller
-@SessionAttributes({"idKlant", "detailsVanKlant", "oudIdAdresType"})
+@SessionAttributes({"idKlant", "detailsVanKlant", "oudIdAdresType", "adressenVanKlant"})
 public class KlantDetailsController {
 	@Autowired
 	private KlantenService klantenService;
@@ -53,6 +53,12 @@ public class KlantDetailsController {
 		Klant klant = klantenService.readKlantOpId(klantId);
 		model.addAttribute("adressen", klantenService.readAdresOpKlantId(klantId));
 		model.addAttribute("adrestypen", klantenService.readAdresTypeOpKlantId(klantId));
+		String adressenVanKlant;
+		if (klant.getTussenvoegsel() == null || klant.getTussenvoegsel().isEmpty())
+			adressenVanKlant = "adressen van " + klant.getVoornaam() + " " + klant.getAchternaam();
+		else
+			adressenVanKlant = "adressen van " + klant.getVoornaam() + " " + klant.getTussenvoegsel() + " " + klant.getAchternaam();
+		model.addAttribute("adressenVanKlant", adressenVanKlant);
 		return "listAdres";
 	}
 	

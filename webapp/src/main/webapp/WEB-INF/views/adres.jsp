@@ -49,11 +49,11 @@
 <sf:form ID="createOrUpdateAdres?idAdres=${adres.idAdres}" method="POST" action="/webapp/createOrUpdateAdres" commandName="adres">
 		<sf:hidden path="idAdres" />
  	Straatnaam*: <sf:input path="straatnaam" />
-		<sf:errors path="straatnaam" cssClass="errors" /><br />
+		<sf:errors path="straatnaam" /><br />
    	Huisnummer*: <sf:input path="huisnummer" />
 		<sf:errors path="huisnummer" /><br />
    	Postcode*: <sf:input path="postcode" />
-		<sf:errors path="postcode" cssErrorClass="errors" /><br>
+		<sf:errors path="postcode" /><br>
    	Woonplaats*: <sf:input path="woonplaats" />
 		<sf:errors path="woonplaats" /><br />
 	Adrestype*: <table border=1>

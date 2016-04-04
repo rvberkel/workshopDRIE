@@ -7,6 +7,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -23,7 +24,9 @@ public class Adres implements java.io.Serializable {
     @Size(min=2, max=45)
     private String straatnaam;
     @NotNull
-    @Size(min=6, max=6)
+    //@Size(min=6, max=7)
+    @Pattern(regexp="^[1-9][0-9]{3}(?!SA|SD|SS)[A-Z]{2}$", message="Dit is geen geldige postcode. Gebruik geen spaties en geen "
+    		+ "kleine letters. Voorbeeld: 1234AB")
     private String postcode;
     @NotNull
     @Size(min=1, max=11)
