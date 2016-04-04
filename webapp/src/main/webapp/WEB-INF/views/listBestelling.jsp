@@ -14,8 +14,8 @@
     <table border=1>
         <thead>
             <tr>
-                <th>BestellingID</th>
                 <th>Klant ID</th>
+                <th>Bestelling ID</th>
                 <th>Artikelaantal</th>
                 <th>Totaalprijs</th> 
                 <th colspan=3>Action</th>
@@ -24,8 +24,9 @@
         <tbody>
             <c:forEach items="${bestellingen}" var="bestelling">
                 <tr>
-                    <td><c:out value="${bestelling.idBestelling}"/></td>
                     <td><c:out value="${bestelling.klant.idKlant}"/></td>
+                    <td><c:out value="${bestelling.idBestelling}"/></td>
+                    
                     <td></td>
                     <td></td>
                     

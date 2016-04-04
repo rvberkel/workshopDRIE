@@ -25,10 +25,10 @@
 				
 					<c:forEach items="${artikelen}" var="artikel" >
 				<tr>	
-					<td><c:out value="${artikel.artikelnaam}"/></td>
-					<td><c:out value="${artikel.idArtikel}" /></td>
-					<td><c:out value="${artikel.artikelnummer}"/></td>
-					<td><c:out value="${artikel.artikelprijs }" /></td>
+					<td><input type="text" name="artikelnaam" readonly="readonly" value="${artikel.artikelnaam}"/></td>
+					<td><input type="text" name="idArtikel" readonly="readonly" value="${artikel.idArtikel}"/></td>
+					<td><input type="text" name="artikelnummer" readonly="readonly" value="${artikel.artikelnummer}"/></td>
+					<td><input type="text" name="artikelprijs" readonly="readonly" value="${artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${aantal}"/></td>
 					
 					<!--  
@@ -38,9 +38,13 @@
 					
 					</c:forEach>
 			</tbody>
-		</table>
+		</table>		
+		Klant ID: <input type="text" name="klantId" value="${klantId}"/><br>
+		
 		<input type="submit" value="Buy! Buy! Buy!" />
 	</sf:form>
+	
+	<a href="<c:url value="/listBestellingen" />">Terug naar Bestellingen</a>
 
 
 </body>

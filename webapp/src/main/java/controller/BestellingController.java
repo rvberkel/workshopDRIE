@@ -44,43 +44,58 @@ public class BestellingController {
     }
 	
 	@RequestMapping(value="/createBestelling", method=RequestMethod.POST)
-	public String processBestellingForm(@ModelAttribute("aantal") String aantal, 
-										@ModelAttribute("artikelnaam") String artikelnaam,
-										@ModelAttribute("idArtikel") String artikelId,
-										@ModelAttribute("artikelnummer") String artikelnummer,
-										@ModelAttribute("artikelprijs") String artikelprijs,
-										//@ModelAttribute("artikel") Artikel artikel, 
-										Model model) {
+	public String processBestellingForm( 
+			//@RequestParam("artikelnaam") String artikelnaam,
+			@RequestParam("idArtikel") String artikelId,
+			//@RequestParam("artikelnummer") String artikelnummer,
+			//@RequestParam("artikelprijs") String artikelprijs,
+			@RequestParam("aantal") String aantal,
+			@RequestParam("klantId") String klantId,
+			@RequestParam("idBestelling") String bestellingId,
+			Model model) {
 		
 		klant = new Klant();
-		klant.setIdKlant(1);
+		klant.setIdKlant(Integer.parseInt(klantId));
 		
 		bestelling = new Bestelling();
 		bestelling.setKlant(klant);
 		
-//		Artikel a = new Artikel();
-//		a.setArtikelnummer("Nieuw Aerikel");
-//		a.setArtikelnummer(artikelnummer);
-//		a.setArtikelprijs(Double.parseDouble(artikelprijs));
+		String[] artikelIds = artikelId.split(",");
+		String[] aantallen = aantal.split(",");  
 		
-//		bestelService.createArtikel(a);
-		bestelService.createBestelling(bestelling);
-		
+		// === CREATE ===
+		if (bestellingId == null || bestellingId.isEmpty() || Integer.parseInt(bestellingId) == 0) {
+			
+			bestelService.createBestelling(bestelling);
+			
+			for(int i = 0; i < artikelIds.length; i++) {
+				int id = Integer.parseInt(artikelIds[i]);
+				Artikel artikelObj = bestelService.readArtikelOpId(id);
+				bha = new BestellingHasArtikel();
+				bha.setArtikel(artikelObj);
+				bha.setBestelling(bestelling);
+				bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
+				//bestelling.addToBestellingHasArtikelen(bha);
+				bestelService.createBestellingHasArtikel(bha);
+			}
+			
+		// === UPDATE ===
+		} else {
+			bestelling.setIdBestelling(Integer.parseInt(bestellingId));
+			bestelService.updateBestelling(bestelling);
+			
+			for(int i = 0; i < artikelIds.length; i++) {
+				int id = Integer.parseInt(artikelIds[i]);
+				Artikel artikelObj = bestelService.readArtikelOpId(id);
+				bha = new BestellingHasArtikel();
+				bha.setArtikel(artikelObj);
+				bha.setBestelling(bestelling);
+				bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
+				//bestelling.addToBestellingHasArtikelen(bha);
+				bestelService.updateAantalArtikelenInBestelling(bha);
+			}
+		}
 	
-		Artikel artikelObj = bestelService.readArtikelOpId(Integer.parseInt("1")); //dit werkt, maar is niet dynamisch
-		//Artikel artikelObj = (Artikel) bestelService.readArtikel(artikel).get(0);
-		//Artikel artikelObj = artikel;
-		bha = new BestellingHasArtikel();
-		
-		bha.setArtikel(artikelObj);
-		//bha.setArtikel(artikel);
-		bha.setBestelling(bestelling);
-		bha.setAantal(Integer.parseInt(aantal));
-		
-		//bestelling.addToBestellingHasArtikelen(bha);
-		bestelService.createBestellingHasArtikel(bha);
-		
-		
 		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
         return "listBestelling";
 	}
@@ -92,8 +107,8 @@ public class BestellingController {
     	
     	model.addAttribute("bestelling", bestelService.readBestellingOpId(id));
     	model.addAttribute("artikelen", bestelService.readAllArtikel());
-//		model.addAttribute("aantal", "");
-//		model.addAttribute("klant_id","");
+		//model.addAttribute("aantal", bestelService.read);
+		model.addAttribute("klantId", bestelService.readBestellingOpId(id).getKlant().getIdKlant());
     	return "bestelling";
     }
 	
