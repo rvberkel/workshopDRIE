@@ -74,8 +74,8 @@ public class BestellingController {
 			}
 		}
 		
-		System.out.println("Array: "+ aantallen);
-		System.out.println("List: " + cleanedAantallen.toString());
+//		System.out.println("Array: "+ aantallen);
+//		System.out.println("List: " + cleanedAantallen.toString());
 
 		
 		// === CREATE ===
@@ -90,8 +90,7 @@ public class BestellingController {
 				bha = new BestellingHasArtikel();
 				bha.setArtikel(artikelObj);  
 				bha.setBestelling(bestelling);
-		//		bha.setAantal(Integer.parseInt("0" + cleanedAantallen.get(i)));  //beetje valsspelen dit
-				bha.setAantal(Integer.parseInt(cleanedAantallen.get(i)));  //beetje valsspelen dit
+				bha.setAantal(Integer.parseInt(cleanedAantallen.get(i))); 
 				//bestelling.addToBestellingHasArtikelen(bha);
 				bestelService.createBestellingHasArtikel(bha);
 			}
@@ -106,7 +105,7 @@ public class BestellingController {
     	
 		int id = Integer.parseInt(idBestelling);
     	model.addAttribute("bestellingHasArtikelen", bestelService.readBestellingOpId(id).getBestellingHasArtikelen());
-    	model.addAttribute("idBestelling", id); //bestelService.readBestellingOpId(id));
+    	model.addAttribute("bestelling", bestelService.readBestellingOpId(id));
 		model.addAttribute("klantId", bestelService.readBestellingOpId(id).getKlant().getIdKlant());
 		
 		// === ingekorte betere versie
@@ -121,8 +120,8 @@ public class BestellingController {
 	public String processUpdateBestellingForm(
 			@RequestParam("idArtikel") String artikelId,
 			@RequestParam("aantal") String aantal,
-			@RequestParam("klantId") String klantId,
-			@RequestParam("idBestelling") String bestellingId,
+//			@RequestParam("klantId") String klantId,
+//			@RequestParam("idBestelling") String bestellingId,
 			@RequestParam("idBHA") String bhaId,
 			Model model) {
 		
@@ -137,7 +136,7 @@ public class BestellingController {
 			}
 		}
 		
-		String[] bhaIds = bhaId.split(",");
+		String[] bhaIds = bhaId.split(","); //deze wordt 'beschermt' door de checkboxes
 				
 		for(int i = 0; i < bhaIds.length; i++) {
 			int id = Integer.parseInt(bhaIds[i]);
@@ -147,7 +146,6 @@ public class BestellingController {
 			bestelService.updateAantalArtikelenInBestelling(bha);
 		}
 		
-	
 		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
 	    return "listBestelling";
 	}
@@ -159,31 +157,32 @@ public class BestellingController {
         int id = Integer.parseInt(idBestelling);
         bestelService.removeBestelling(id);
         
-        
         model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
         return "listBestelling";
 	}
 	
 	//Delete artikel from bestelling
 	@RequestMapping (value = "/deleteArtikelFromBestelling", method=RequestMethod.GET)
-	public String deleteArtFromBest(@RequestParam("idBHA") String idBestelArtikel, 
+	public String deleteArtFromBest(@RequestParam("idBHA") String idBestelArtikel,
+									@RequestParam("idBestelling") String idBestelling, //zonder dit leek ie beter te werken
 									Model model) {
 		
 		int bhaId = Integer.parseInt(idBestelArtikel);
 		bha = bestelService.readBestellingHasArtikelOpId(bhaId);
 		int artikelId = bha.getArtikel().getIdArtikel();
-		int bestellingId = bha.getBestelling().getIdBestelling();
+		
+//		bestelling = bha.getBestelling();
+//		int bestellingId = bestelling.getIdBestelling();
+		int bestellingId = Integer.parseInt(idBestelling);
+		bestelling = bestelService.readBestellingOpId(bestellingId);		
 		
 		bestelService.deleteArtikelUitBestelling(bestellingId, artikelId);
 		
-//		//nieuwe page generieren
-//		bestelling = bestelService.readBestellingOpId(bestellingId);
-//		model.addAttribute("bestellingHasArtikel", bestelling.getBestellingHasArtikelen());
-//		model.addAttribute("bestelling", bestelling);
-    	
-    	model.addAttribute("bestellingHasArtikelen", bestelService.readBestellingOpId(bestellingId).getBestellingHasArtikelen());
-    	model.addAttribute("idBestelling", bestellingId); //bestelService.readBestellingOpId(id));
-		model.addAttribute("klantId", bestelService.readBestellingOpId(bestellingId).getKlant().getIdKlant());
+		Set<BestellingHasArtikel> bhas = bestelling.getBestellingHasArtikelen(); //zit dit misschien in dezelfde hibernate sessie oid?
+		   	
+    	model.addAttribute("bestellingHasArtikelen", bhas);
+    	model.addAttribute("bestelling", bestelling);
+		model.addAttribute("klantId", bestelling.getKlant().getIdKlant());
 		
 		return "bestellingUpdate";
 	}
