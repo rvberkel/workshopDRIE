@@ -21,26 +21,27 @@
 		<table ID="bestellingHasArtikelTabel" border=1>
 			<thead>
 				<tr>
-					<th>Naam</th> <th>Artikel ID</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
+					<th></th><th>Naam</th><th>Artikelnummer</th><th>Stukprijs</th><th>Aantal</th><th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
 				
 					<c:forEach items="${bestellingHasArtikelen}" var="bha" >
-					<input type="hidden" name="idBHA" readonly="readonly" value="${bha.idBestelArtikel}"/>
+			<!--    <input type="hidden" name="idBHA" readonly="readonly" value="${bha.idBestelArtikel}"/> -->		
+				  <input type="hidden" name="idArtikel" value="${bha.artikel.idArtikel}"/>
 				<tr>
-					
+					<td><input type="checkbox" name="idBHA" value="${bha.idBestelArtikel}"/></td>
 					<td><input type="text" name="artikelnaam" readonly="readonly" value="${bha.artikel.artikelnaam}"/></td>
-					<td><input type="text" name="idArtikel" readonly="readonly" value="${bha.artikel.idArtikel}"/></td>
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${bha.artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${bha.artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${bha.aantal}"/></td>
+					<td><a href="deleteArtikelFromBestelling?idBHA=${bha.idBestelArtikel}">Delete from Bestelling WIP</a></td>
 				</tr>
 					
 					</c:forEach>
 			</tbody>
 		</table>		
-		TODO: linkje voeg artikel toe  <br>
+		TODO: linkje toevoegen "voeg artikel toe"  <br>
 		<input type="submit" value="Buy! Buy! Buy!" />
 	</sf:form>
 	

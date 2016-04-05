@@ -18,15 +18,16 @@
 		<table ID="artikelTabel" border=1>
 			<thead>
 				<tr>
-					<th>Naam</th> <th>Artikel ID</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
+					<th></th> <th>Naam</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
 				</tr>
 			</thead>
 			<tbody>
 				
 					<c:forEach items="${artikelen}" var="artikel" >
 				<tr>	
+					<td><input type="checkbox" name="idArtikel" value="${artikel.idArtikel}"/></td>
 					<td><input type="text" name="artikelnaam" readonly="readonly" value="${artikel.artikelnaam}"/></td>
-					<td><input type="text" name="idArtikel" readonly="readonly" value="${artikel.idArtikel}"/></td>
+					
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${aantal}"/></td>
