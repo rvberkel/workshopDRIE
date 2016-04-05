@@ -28,7 +28,11 @@
                     <td><c:out value="${bestelling.idBestelling}"/></td>
                     
                     <td></td>
-                    <td></td>
+                    <td><c:forEach items="${bestelling.bestellingHasArtikelen}" var="bestellingHasArtikel">
+                    	
+                    </c:forEach> 
+                    
+                    </td>
                     
                     <td><a href="showUpdateBestelling?idBestelling=${bestelling.idBestelling}">Update</a></td>
                     <td><a href="deleteBestelling?idBestelling=${bestelling.idBestelling}">Delete</a></td>
@@ -36,9 +40,9 @@
             </c:forEach>
         </tbody>
     </table> 
-    <a href="<c:url value="/listbetaalwijze" />">Alle Betaalwijzes</a> |
-    <a href="<c:url value="/listArtikelen" />">Alle Artikelen</a> |
-    <a href="<c:url value="/listFacturen" />">Alle Facturen</a> <br>
-    <p><a href="welkom">Terug naar het begin</a></p>
+    <a href="<c:url value="/listbetaalwijze" />" class="button">Alle Betaalwijzes</a> |
+    <a href="<c:url value="/listArtikelen" />" class="button">Alle Artikelen</a> |
+    <a href="<c:url value="/listFacturen" />" class="button">Alle Facturen</a> <br>
+    <p><a href="welkom" class="button">Terug naar het begin</a></p>
 </body>
 </html>

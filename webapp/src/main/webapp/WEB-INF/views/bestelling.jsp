@@ -40,11 +40,13 @@
 			</tbody>
 		</table>		
 		Klant ID: <input type="text" name="klantId" value="${klantId}"/><br>
+		Bestelling ID: <input type="text" name="idBestelling" readonly="readonly" value="${bestelling.idBestelling}"/><br>
+		
 		
 		<input type="submit" value="Buy! Buy! Buy!" />
 	</sf:form>
 	
-	<a href="<c:url value="/listBestellingen" />">Terug naar Bestellingen</a>
+	<a href="<c:url value="/listBestellingen" />" class="button">Terug naar Bestellingen</a>
 
 
 </body>

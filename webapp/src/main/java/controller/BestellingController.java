@@ -64,7 +64,7 @@ public class BestellingController {
 		String[] aantallen = aantal.split(",");  
 		
 		// === CREATE ===
-		if (bestellingId == null || bestellingId.isEmpty() || Integer.parseInt(bestellingId) == 0) {
+		//if (bestellingId == null || bestellingId.isEmpty() || Integer.parseInt(bestellingId) == 0) {
 			
 			bestelService.createBestelling(bestelling);
 			
@@ -80,21 +80,22 @@ public class BestellingController {
 			}
 			
 		// === UPDATE ===
-		} else {
-			bestelling.setIdBestelling(Integer.parseInt(bestellingId));
-			bestelService.updateBestelling(bestelling);
-			
-			for(int i = 0; i < artikelIds.length; i++) {
-				int id = Integer.parseInt(artikelIds[i]);
-				Artikel artikelObj = bestelService.readArtikelOpId(id);
-				bha = new BestellingHasArtikel();
-				bha.setArtikel(artikelObj);
-				bha.setBestelling(bestelling);
-				bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
-				//bestelling.addToBestellingHasArtikelen(bha);
-				bestelService.updateAantalArtikelenInBestelling(bha);
-			}
-		}
+//		} else {
+//			bestelling.setIdBestelling(Integer.parseInt(bestellingId));
+//			bestelService.updateBestelling(bestelling);
+//			
+//			for(int i = 0; i < artikelIds.length; i++) {
+//				int id = Integer.parseInt(artikelIds[i]);
+//				Artikel artikelObj = bestelService.readArtikelOpId(id);
+//				bha = new BestellingHasArtikel();
+//				bha.setArtikel(artikelObj);
+//				bha.setBestelling(bestelling);
+//				bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
+//				//bestelling.addToBestellingHasArtikelen(bha);
+//				bestelService.updateAantalArtikelenInBestelling(bha);
+//				
+//			}
+//		}
 	
 		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
         return "listBestelling";
@@ -102,15 +103,78 @@ public class BestellingController {
 	
 	@RequestMapping(value="/showUpdateBestelling", method=RequestMethod.GET)
     public String showUpdateBestellingForm(@RequestParam("idBestelling") String idBestelling, Model model) {
-    	int id = Integer.parseInt(idBestelling);
     	
+		int id = Integer.parseInt(idBestelling);
+		
     	
+    	model.addAttribute("bestellingHasArtikelen", bestelService.readBestellingOpId(id).getBestellingHasArtikelen());
     	model.addAttribute("bestelling", bestelService.readBestellingOpId(id));
-    	model.addAttribute("artikelen", bestelService.readAllArtikel());
-		//model.addAttribute("aantal", bestelService.read);
 		model.addAttribute("klantId", bestelService.readBestellingOpId(id).getKlant().getIdKlant());
-    	return "bestelling";
+		
+		// === ingekorte betere versie
+//		bestelling = bestelService.readBestellingOpId(Integer.parseInt(idBestelling));
+//		
+//		model.addAttribute("bestellingHasArtikel", bestelling.getBestellingHasArtikelen());
+//		model.addAttribute("bestelling", bestelling);
+		
+		
+    	return "bestellingUpdate";
     }
+	
+	@RequestMapping(value="/updateBestelling", method=RequestMethod.POST)
+	public String processUpdateBestellingForm(
+		//@RequestParam("artikelnaam") String artikelnaam,
+		@RequestParam("idArtikel") String artikelId,
+		//@RequestParam("artikelnummer") String artikelnummer,
+		//@RequestParam("artikelprijs") String artikelprijs,
+		@RequestParam("aantal") String aantal,
+		@RequestParam("klantId") String klantId,
+		@RequestParam("idBestelling") String bestellingId,
+		@RequestParam("idBHA") String bhaId,
+		Model model) {
+	
+		klant = new Klant();
+		klant.setIdKlant(Integer.parseInt(klantId));
+		
+		bestelling = new Bestelling();
+		bestelling.setKlant(klant);
+		
+		String[] artikelIds = artikelId.split(",");
+		String[] aantallen = aantal.split(",");
+		String[] bhaIds = bhaId.split(",");
+		
+		
+		bestelling.setIdBestelling(Integer.parseInt(bestellingId));
+		bestelService.updateBestelling(bestelling);
+		
+		for(int i = 0; i < bhaIds.length; i++) {
+			int id = Integer.parseInt(bhaIds[i]);
+			bha = bestelService.readBestellingHasArtikelOpId(id);
+			//bha.setArtikel(artikelObj);
+			//bha.setBestelling(bestelling);
+			bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
+			//bestelling.addToBestellingHasArtikelen(bha);
+			bestelService.updateAantalArtikelenInBestelling(bha);
+			
+		}
+		
+//		for(int i = 0; i < artikelIds.length; i++) {
+//			int id = Integer.parseInt(artikelIds[i]);
+//			Artikel artikelObj = bestelService.readArtikelOpId(id);
+//			bha = new BestellingHasArtikel();
+//			bha.setArtikel(artikelObj);
+//			bha.setBestelling(bestelling);
+//			bha.setAantal(Integer.parseInt("0" + aantallen[i]));  //beetje valsspelen dit
+//			//bestelling.addToBestellingHasArtikelen(bha);
+//			bestelService.updateAantalArtikelenInBestelling(bha);
+//			
+//		}
+	
+		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
+	    return "listBestelling";
+
+	}
+	
 	
 	//Delete bestelling werkt alleen als de bestelling geen artikelen heeft
 	@RequestMapping (value = "/deleteBestelling", method = RequestMethod.GET)
