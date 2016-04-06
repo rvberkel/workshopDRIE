@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Show All Bestellingen</title>
 </head>
+<h1>Alle Bestellingen</h1>
 <body>
     <p><a href="showCreateBestellingForm">Add Bestelling</a></p>
   

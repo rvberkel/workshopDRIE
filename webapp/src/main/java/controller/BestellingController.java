@@ -42,14 +42,10 @@ public class BestellingController {
     }
 	
 	@RequestMapping(value="/createBestelling", method=RequestMethod.POST)
-	public String processBestellingForm( 
-			//@RequestParam("artikelnaam") String artikelnaam,
-			@RequestParam("idArtikel") String artikelId,
-			//@RequestParam("artikelnummer") String artikelnummer,
-			//@RequestParam("artikelprijs") String artikelprijs,
-			@RequestParam("aantal") String aantal,
-			@RequestParam("klantId") String klantId,
-			Model model) {
+	public String processBestellingForm(@RequestParam("idArtikel") String artikelId,
+										@RequestParam("aantal") String aantal,
+										@RequestParam("klantId") String klantId,
+										Model model) {
 		
 		Klant klant = new Klant();
 		klant.setIdKlant(Integer.parseInt(klantId));
@@ -64,14 +60,6 @@ public class BestellingController {
 				cleanedAantallen.add(aantallen[i]);
 			}
 		}
-		
-//		System.out.println("Array: "+ aantallen);
-//		System.out.println("List: " + cleanedAantallen.toString());
-
-		
-		// === CREATE ===
-		//if (bestellingId == null || bestellingId.isEmpty() || Integer.parseInt(bestellingId) == 0) {
-			
 		bestelService.createBestelling(bestelling);
 			
 		for(int i = 0; i < artikelIds.length; i++) {	
@@ -81,25 +69,32 @@ public class BestellingController {
 			bha.setArtikel(artikelObj);  
 			bha.setBestelling(bestelling);
 			bha.setAantal(Integer.parseInt(cleanedAantallen.get(i))); 
-			//bestelling.addToBestellingHasArtikelen(bha);
 			bestelService.createBestellingHasArtikel(bha);
 		}
-		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
-        return "listBestelling";
+		
+		int bestellingId = bestelling.getIdBestelling();
+		bestelling = bestelService.readBestellingOpId(bestellingId);
+		
+        //DOOR naar updateBestelling vanwege TOTAALPRIJS
+        model.addAttribute("bestellingHasArtikelen", bestelling.getBestellingHasArtikelen());  
+    	model.addAttribute("bestelling", bestelling); 				
+		model.addAttribute("klantId", Integer.parseInt(klantId)); 
+		model.addAttribute("totaalprijs", getTotaalprijs(bestellingId));  
+		return "bestellingUpdate";
 	}
 	
 	@RequestMapping(value="/showUpdateBestellingForm", method=RequestMethod.GET)
     public String showUpdateBestellingForm(@RequestParam("idBestelling") String idBestelling, Model model) {
     	
-		int id = Integer.parseInt(idBestelling);
-    	model.addAttribute("bestellingHasArtikelen", bestelService.readBestellingOpId(id).getBestellingHasArtikelen());
-    	model.addAttribute("bestelling", bestelService.readBestellingOpId(id));
-		model.addAttribute("klantId", bestelService.readBestellingOpId(id).getKlant().getIdKlant());
+		int bestellingId = Integer.parseInt(idBestelling);
+		Bestelling bestelObj = bestelService.readBestellingOpId(bestellingId);
+		Klant klantObj = bestelObj.getKlant();
+		Set<BestellingHasArtikel> bhas = bestelObj.getBestellingHasArtikelen();
 		
-		// === ingekorte betere versie
-//		bestelling = bestelService.readBestellingOpId(Integer.parseInt(idBestelling));
-//		model.addAttribute("bestellingHasArtikel", bestelling.getBestellingHasArtikelen());
-//		model.addAttribute("bestelling", bestelling);
+    	model.addAttribute("bestellingHasArtikelen", bhas);
+    	model.addAttribute("bestelling", bestelObj);
+		model.addAttribute("klantId", klantObj.getIdKlant());
+		model.addAttribute("totaalprijs", getTotaalprijs(bestellingId));
 		
     	return "bestellingUpdate";
     }
@@ -108,13 +103,10 @@ public class BestellingController {
 	public String processUpdateBestellingForm(
 			@RequestParam("idArtikel") String artikelId,
 			@RequestParam("aantal") String aantal,
-//			@RequestParam("klantId") String klantId,
-//			@RequestParam("idBestelling") String bestellingId,
+			@RequestParam("klantId") String klantId,
+			@RequestParam("idBestelling") String bestellingId,
 			@RequestParam("idBHA") String bhaId,
 			Model model) {
-		
-//		nou, als ie alleen de gegevens van de aangevinkte artikelen meeneemt, en je schrapt al die nullen uit de aantallenlijst, 
-//		dan houd je als het goed is twee arrays over die even groot zijn en op de juist volgorde staan.
 	
 		String[] aantallen = aantal.split(",");
 		List<String> cleanedAantallen = new ArrayList<>();
@@ -123,7 +115,6 @@ public class BestellingController {
 				cleanedAantallen.add(aantallen[i]);
 			}
 		}
-		
 		String[] bhaIds = bhaId.split(","); //deze wordt 'beschermd' door de checkboxes
 				
 		for(int i = 0; i < bhaIds.length; i++) {
@@ -134,16 +125,21 @@ public class BestellingController {
 			bestelService.updateAantalArtikelenInBestelling(bha);
 		}
 		
-		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
-	    return "listBestelling";
+		int id_bestelling = Integer.parseInt(bestellingId);
+		Bestelling bestelling = bestelService.readBestellingOpId(id_bestelling);
+	    
+        model.addAttribute("bestellingHasArtikelen", bestelling.getBestellingHasArtikelen());  
+    	model.addAttribute("bestelling", bestelling); 				
+		model.addAttribute("klantId", Integer.parseInt(klantId)); 
+		model.addAttribute("totaalprijs", getTotaalprijs(id_bestelling));  
+		return "bestellingUpdate";
 	}
 	
 	
 	//Delete bestelling 
 	@RequestMapping (value = "/deleteBestelling", method = RequestMethod.GET)
 	  public String deleteBestelling(@RequestParam("idBestelling") String idBestelling, Model model) {
-        int id = Integer.parseInt(idBestelling);
-        bestelService.removeBestelling(id);
+        bestelService.removeBestelling(Integer.parseInt(idBestelling));
         
         model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
         return "listBestelling";
@@ -164,8 +160,20 @@ public class BestellingController {
     	model.addAttribute("bestellingHasArtikelen", bhas);
     	model.addAttribute("bestelling", bestelling);
 		model.addAttribute("klantId", Integer.parseInt(klantId));
-		
+		model.addAttribute("totaalprijs", getTotaalprijs(bestellingId));
 		return "bestellingUpdate";
 	}
 	
+	private double getTotaalprijs(int idBestelling) {
+		Bestelling bestelObj = bestelService.readBestellingOpId(idBestelling);
+		Set<BestellingHasArtikel> bhas = bestelObj.getBestellingHasArtikelen();
+		
+		double totaalprijs = 0;
+		for (BestellingHasArtikel bha: bhas) {
+			double prijs = bha.getArtikel().getArtikelprijs() * bha.getAantal();
+			totaalprijs = totaalprijs + prijs;
+		}
+		
+		return (totaalprijs * 100)/100;
+	}
 }

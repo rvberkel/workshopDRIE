@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bestelformulier updaten</title>
+<title>Bestelformulier stap 2</title>
 </head>
-<h1>Bestelformulier updaten</h1>
+<h1>Bestelformulier stap 2</h1>
 <body>
 
-	Verander de hoeveelheden der artikelen.
+	Verander de hoeveelheden der artikelen of ga door naar afrekenen.
 
 	<sf:form ID="ArtikelTabel?${bestellingHasArtikelen}" method="POST"
 		action="/webapp/updateBestelling" commandName="bestellingHasArtikel">
@@ -27,25 +27,24 @@
 			<tbody>
 				
 					<c:forEach items="${bestellingHasArtikelen}" var="bha" >
-			<!--    <input type="hidden" name="idBHA" readonly="readonly" value="${bha.idBestelArtikel}"/> -->
-					<td><input type="hidden" name="idArtikel" value="${bha.artikel.idArtikel}"/></td>	
+					<input type="hidden" name="idArtikel" value="${bha.artikel.idArtikel}"/>	
 				<tr>
 					<td><input type="checkbox" name="idBHA" value="${bha.idBestelArtikel}"/></td>
 					<td><input type="text" name="artikelnaam" readonly="readonly" value="${bha.artikel.artikelnaam}"/></td>
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${bha.artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${bha.artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${bha.aantal}"/></td>
-					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&klantId=${klantId}&idBHA=${bha.idBestelArtikel}">Delete from Bestelling WIP</a></td>
+					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&klantId=${klantId}&idBHA=${bha.idBestelArtikel}">verwijder</a></td>
+				</tr></c:forEach>
+				<tr>
+					<td></td><td></td><td>Totaalprijs:</td><td>${totaalprijs}</td><td>TODO: You will PAY!! for this</td>
 				</tr>
-					
-					</c:forEach>
 			</tbody>
 		</table>		
 		TODO: linkje toevoegen "voeg artikel toe"  <br>
 		<input type="submit" value="Update! Update! Update!" />
 	</sf:form>
 	
-	<a href="<c:url value="/listBestellingen" />" class="button">Terug naar Bestellingen</a><br>
 	<a href="listBestellingen"><button>Terug naar Bestellingen</button></a>
 
 </body>

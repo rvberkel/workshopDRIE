@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bestelformulier</title>
+<title>Bestelformulier stap 1</title>
 </head>
-<h1>Bestelformulier</h1>
+<h1>Bestelformulier stap 1</h1>
 <body>
 
 	Vul de hoeveelheden in van de artikelen die je wil kopen.
