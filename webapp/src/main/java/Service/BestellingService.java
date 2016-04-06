@@ -353,7 +353,6 @@ public class BestellingService {
         }
     }
     
-    //de parameter zou ook een BHA-object kunnen zijn, dan wordt deze methode korter
     public boolean deleteArtikelUitBestelling(int bestelling_id, int artikel_id){
         
         Bestelling bestelling = (Bestelling) bestellingDao.readEntity(bestelling_id);
@@ -374,6 +373,19 @@ public class BestellingService {
             }
         }
         return false;
+    }
+    
+    public boolean deleteArtikelUitBestellingOpBHAId(int bha_id) {
+    	LOG.info("deleteArtikelUitBestellingOpBHAId op BHA_id in Service gestart");
+    	try {
+    		BestellingHasArtikel bhaObj = (BestellingHasArtikel)bhaDao.readEntity(bha_id);
+    		bhaDao.deleteEntity(bhaObj);
+    		
+    		return true;
+    	} catch (HibernateException ex) {
+            LOG.error(ex.getMessage());
+            return false;
+        }
     }
     
     //bij deletenFactuur ook de bijbehorende betalingen deleten? (of gebeurt dat vanzelf)

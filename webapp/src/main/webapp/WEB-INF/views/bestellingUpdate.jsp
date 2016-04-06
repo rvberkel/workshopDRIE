@@ -35,7 +35,7 @@
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${bha.artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${bha.artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${bha.aantal}"/></td>
-					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&idArtikel=${bha.artikel.idArtikel}&klantId=${klantId}">Delete from Bestelling WIP</a></td>
+					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&klantId=${klantId}&idBHA=${bha.idBestelArtikel}">Delete from Bestelling WIP</a></td>
 				</tr>
 					
 					</c:forEach>

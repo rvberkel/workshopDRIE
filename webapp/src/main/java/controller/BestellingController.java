@@ -151,19 +151,19 @@ public class BestellingController {
 	
 	//Delete artikel from bestelling
 	@RequestMapping (value = "/deleteArtikelFromBestelling", method=RequestMethod.GET)
-	public String deleteArtFromBest(@RequestParam("idBestelling") String idBestelling,//zonder dit leek ie beter te werken
-									@RequestParam("idArtikel") String idArtikel,
+	public String deleteArtFromBest(@RequestParam("idBestelling") String idBestelling,
 									@RequestParam("klantId") String klantId,
+									@RequestParam("idBHA") String idBHA,
 									Model model) {
-		int artikelId = Integer.parseInt(idArtikel);
-		int bestellingId = Integer.parseInt(idBestelling);	
-		bestelService.deleteArtikelUitBestelling(bestellingId, artikelId);
+		int bestellingId = Integer.parseInt(idBestelling);
+		bestelService.deleteArtikelUitBestellingOpBHAId(Integer.parseInt(idBHA));
+		
 		Bestelling bestelling = bestelService.readBestellingOpId(bestellingId);
-		Set<BestellingHasArtikel> bhas = bestelling.getBestellingHasArtikelen(); //zit dit misschien in dezelfde hibernate sessie oid?
-		   	
+		Set<BestellingHasArtikel> bhas = bestelling.getBestellingHasArtikelen(); 
+	
     	model.addAttribute("bestellingHasArtikelen", bhas);
     	model.addAttribute("bestelling", bestelling);
-		model.addAttribute("klantId", klantId);
+		model.addAttribute("klantId", Integer.parseInt(klantId));
 		
 		return "bestellingUpdate";
 	}

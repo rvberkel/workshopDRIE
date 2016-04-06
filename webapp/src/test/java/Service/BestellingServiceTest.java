@@ -64,6 +64,30 @@ public class BestellingServiceTest {
     }
     
     @Test
+    public void testDeleteBHA() {
+    	klant.setVoornaam("Theo");
+        klant.setAchternaam("Tester");
+        klant.setTussenvoegsel("de");
+        klant.setEmail("ttest@nep.com");
+        
+        artikel.setArtikelnaam("artikelCreated");
+        artikel.setArtikelnummer("0001");
+        artikel.setArtikelprijs(2);
+        artikel.setArtikelomschrijving("Om te testen");
+        bestellingService.createArtikel(artikel);
+        
+        bestellingHasArtikel.setAantal(1);
+        bestellingHasArtikel.setArtikel(artikel);
+        
+        bestelling.setKlant(klant);
+        bestelling.addToBestellingHasArtikelen(bestellingHasArtikel);
+        bestellingService.createBestelling(bestelling);
+        
+        
+        assertTrue(bestellingService.deleteArtikelUitBestellingOpBHAId(bestellingHasArtikel.getIdBestelArtikel()));
+    }
+    
+    @Test
     public void testCreateBestellingMetAllesErOpEnEraan_ShouldPass_OfMisschienNiet() {
          
         klant.setVoornaam("Theo");
