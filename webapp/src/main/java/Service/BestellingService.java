@@ -39,8 +39,8 @@ public class BestellingService {
     @Qualifier("BestellingHasArtikelDao")
     GenericDao bhaDao;
     @Autowired
-    @Qualifier("ArtikelDao")        
-    GenericDao artikelDao;
+    //@Qualifier("ArtikelDao")        
+    ArtikelDao artikelDao;
     @Autowired
     @Qualifier("FactuurDao")
     GenericDao factuurDao;
@@ -106,6 +106,11 @@ public class BestellingService {
     public List <Artikel> readAllArtikel(){
         LOG.info("read alle artikelen gestart");
         return (List<Artikel>)artikelDao.readAll();
+    }
+    
+    public List<Artikel> readArtikelOpBestellingId(int bestellingId) {
+    	LOG.info("read artikelen op bestellingId gestart");
+        return artikelDao.readByBestellingId(bestellingId);
     }
     
     public List<Factuur> readFactuur(Factuur factuur){

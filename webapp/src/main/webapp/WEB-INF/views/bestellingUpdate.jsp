@@ -41,7 +41,7 @@
 				</tr>
 			</tbody>
 		</table>		
-		TODO: linkje toevoegen "voeg artikel toe"  <br>
+		<td><a href="showArtikelKeuzeLijst?idBestelling=${bestelling.idBestelling}&klantId=${klantId}">Voeg artikel toe aan bestelling</a></td><br>
 		<input type="submit" value="Update! Update! Update!" />
 	</sf:form>
 	

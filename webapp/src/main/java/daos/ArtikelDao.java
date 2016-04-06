@@ -4,6 +4,7 @@ package daos;
 import POJO.Artikel;
 import genericDao.GenericDao;
 import genericDao.GenericDaoImpl;
+import interfaces.ArtikelDaoInterface;
 
 import java.util.List;
 
@@ -24,9 +25,8 @@ import org.springframework.context.annotation.Scope;
 @Configurable(autowire=Autowire.BY_TYPE)
 @Scope("prototype")
 @Transactional
-public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
+public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> implements ArtikelDaoInterface {
     private static final Logger LOG = LoggerFactory.getLogger(ArtikelDao.class);
-
   
     public List<Artikel> readByExample(Artikel artikel) {
     	Criteria criteria = createEntityCriteria(getCurrentSession());
@@ -45,5 +45,16 @@ public class ArtikelDao extends GenericDaoImpl<Artikel, Integer> {
         q.addEntity(Artikel.class);
         List<Artikel> results = (List<Artikel>)q.list();
         return results;
+    }
+    
+    @Override
+    public List<Artikel> readByBestellingId(int bestellingId) {
+    	String query = "select * from artikel where idArtikel IN (select artikel_idArtikel from bestelling_has_artikel "
+    			+ "where bestelling_idBestelling = " + bestellingId + ")";
+    	Session session = getCurrentSession();
+    	SQLQuery q = session.createSQLQuery(query);
+    	q.addEntity(Artikel.class);
+    	List<Artikel> results = (List<Artikel>)q.list();
+    	return results;
     }
 }
