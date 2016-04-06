@@ -27,22 +27,22 @@
 			<tbody>
 				
 					<c:forEach items="${bestellingHasArtikelen}" var="bha" >
-			<!--    <input type="hidden" name="idBHA" readonly="readonly" value="${bha.idBestelArtikel}"/> -->		
-			  	  <input type="hidden" name="idArtikel" value="${bha.artikel.idArtikel}"/>  
+			<!--    <input type="hidden" name="idBHA" readonly="readonly" value="${bha.idBestelArtikel}"/> -->
+					<td><input type="hidden" name="idArtikel" value="${bha.artikel.idArtikel}"/></td>	
 				<tr>
 					<td><input type="checkbox" name="idBHA" value="${bha.idBestelArtikel}"/></td>
 					<td><input type="text" name="artikelnaam" readonly="readonly" value="${bha.artikel.artikelnaam}"/></td>
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${bha.artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${bha.artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${bha.aantal}"/></td>
-					<td><a href="deleteArtikelFromBestelling?idBHA=${bha.idBestelArtikel}&idBestelling=${bestelling.idBestelling}">Delete from Bestelling WIP</a></td>
+					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&idArtikel=${bha.artikel.idArtikel}&klantId=${klantId}">Delete from Bestelling WIP</a></td>
 				</tr>
 					
 					</c:forEach>
 			</tbody>
 		</table>		
 		TODO: linkje toevoegen "voeg artikel toe"  <br>
-		<input type="submit" value="Buy! Buy! Buy!" />
+		<input type="submit" value="Update! Update! Update!" />
 	</sf:form>
 	
 	<a href="<c:url value="/listBestellingen" />" class="button">Terug naar Bestellingen</a><br>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import Helpers.DatabaseClearer;
 import POJO.Adres;
 import POJO.AdresType;
+import POJO.Artikel;
 import POJO.Klant;
+import Service.BestellingService;
 import Service.KlantenService;
 import genericDao.GenericDao;
 import Helpers.SpringHibernateUtil;
@@ -54,7 +57,17 @@ public class AdresDaoTest {
 	@Autowired
 	private Adres adres3;
 	@Autowired
+	Artikel artikelCreated;
+	@Autowired 
+	Artikel artikel1;
+	@Autowired
+	Artikel artikel2;
+	@Autowired
+	Artikel artikel3;
+	@Autowired
     KlantenService klantenService;
+	@Autowired
+	BestellingService bestellingService;
 	@Autowired
 	private DatabaseClearer databaseClearer;
 	
@@ -97,6 +110,27 @@ public class AdresDaoTest {
         klant2.addToAdressen(adres3, adresType3);
         klantenService.createKlant(klant);
         klantenService.createKlant(klant2);
+        
+        artikelCreated.setArtikelnaam("artikelCreated");
+        artikelCreated.setArtikelnummer("0001");
+        artikelCreated.setArtikelprijs(2);
+        artikelCreated.setArtikelomschrijving("Om te testen");
+        bestellingService.createArtikel(artikelCreated);
+        artikel1.setArtikelnaam("Badpak");
+        artikel1.setArtikelnummer("0001");
+        artikel1.setArtikelprijs(19.95);
+        artikel1.setArtikelomschrijving("Om te creëeren");
+        bestellingService.createArtikel(artikel1);
+        artikel2.setArtikelnaam("Blaat");
+        artikel2.setArtikelnummer("0004");
+        artikel2.setArtikelprijs(56);
+        artikel2.setArtikelomschrijving("Burp");
+        bestellingService.createArtikel(artikel2);
+        artikel3.setArtikelnaam("Fluffel");
+        artikel3.setArtikelnummer("3204");
+        artikel3.setArtikelprijs(4);
+        artikel3.setArtikelomschrijving("Nurg");
+        bestellingService.createArtikel(artikel3);
 	}
 	
 	/*

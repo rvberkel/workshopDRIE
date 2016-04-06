@@ -21,13 +21,11 @@
 					<th></th> <th>Naam</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
 				</tr>
 			</thead>
-			<tbody>
-				
+			<tbody>	
 					<c:forEach items="${artikelen}" var="artikel" >
-				<tr>	
+					<tr>	
 					<td><input type="checkbox" name="idArtikel" value="${artikel.idArtikel}"/></td>
 					<td><input type="text" name="artikelnaam" readonly="readonly" value="${artikel.artikelnaam}"/></td>
-					
 					<td><input type="text" name="artikelnummer" readonly="readonly" value="${artikel.artikelnummer}"/></td>
 					<td><input type="text" name="artikelprijs" readonly="readonly" value="${artikel.artikelprijs}"/></td>
 					<td><input type="text" name="aantal" value="${aantal}"/></td>
@@ -41,14 +39,9 @@
 			</tbody>
 		</table>		
 		Klant ID: <input type="text" name="klantId" value="${klantId}"/><br>
-		Bestelling ID: <input type="text" name="idBestelling" readonly="readonly" value="${bestelling.idBestelling}"/><br>
-		
-		
+		<!--Bestelling ID: <input type="text" name="idBestelling" readonly="readonly" value="${bestelling.idBestelling}"/><br>-->
 		<input type="submit" value="Buy! Buy! Buy!" />
 	</sf:form>
-	
 	<a href="<c:url value="/listBestellingen" />" class="button">Terug naar Bestellingen</a>
-
-
 </body>
 </html>

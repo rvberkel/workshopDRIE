@@ -30,6 +30,10 @@ public class ArtikelDaoTest {
     Artikel artikelCreated;
     @Autowired 
     Artikel artikel1;
+    @Autowired
+    Artikel artikel2;
+    @Autowired
+    Artikel artikel3;
     
     @Autowired
     @Qualifier("ArtikelDao")
@@ -51,13 +55,25 @@ public class ArtikelDaoTest {
         dbClearer.clearDatabase();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        
         artikelCreated.setArtikelnaam("artikelCreated");
         artikelCreated.setArtikelnummer("0001");
         artikelCreated.setArtikelprijs(2);
         artikelCreated.setArtikelomschrijving("Om te testen");
         artikelCreated.setIdArtikel((Integer)session.save(artikelCreated));
-        
+        session.getTransaction().commit();
+        session.beginTransaction();
+        artikel2.setArtikelnaam("Blaat");
+        artikel2.setArtikelnummer("0004");
+        artikel2.setArtikelprijs(56);
+        artikel2.setArtikelomschrijving("Burp");
+        artikel2.setIdArtikel((Integer)session.save(artikel2));
+        session.getTransaction().commit();
+        session.beginTransaction();
+        artikel3.setArtikelnaam("Fluffel");
+        artikel3.setArtikelnummer("3204");
+        artikel3.setArtikelprijs(4);
+        artikel3.setArtikelomschrijving("Nurg");
+        artikel3.setIdArtikel((Integer)session.save(artikel3));
         session.getTransaction().commit();
         session.close();
     }
@@ -88,7 +104,7 @@ public class ArtikelDaoTest {
         System.out.println("\u001B[31m" + loadArtikel.getArtikelnaam());
         assertEquals(artikel1.getArtikelnaam(), loadArtikel.getArtikelnaam());
     }
-
+    /*
     @Test
     public void testDeleteArtikel_ShouldPass() {
         System.out.println("deleteArtikel_ShouldPass");        
@@ -161,4 +177,5 @@ public class ArtikelDaoTest {
         //Assert
         assertEquals(artikelCreated.getArtikelomschrijving(), loadArtikel.getArtikelomschrijving());
     }
+    */
 }

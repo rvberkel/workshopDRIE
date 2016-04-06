@@ -9,7 +9,7 @@
 <title>Show All Bestellingen</title>
 </head>
 <body>
-    <p><a href="createBestelling">Add Bestelling</a></p>
+    <p><a href="showCreateBestellingForm">Add Bestelling</a></p>
   
     <table border=1>
         <thead>
@@ -34,7 +34,7 @@
                     
                     </td>
                     
-                    <td><a href="showUpdateBestelling?idBestelling=${bestelling.idBestelling}">Update</a></td>
+                    <td><a href="showUpdateBestellingForm?idBestelling=${bestelling.idBestelling}">Update</a></td>
                     <td><a href="deleteBestelling?idBestelling=${bestelling.idBestelling}">Delete</a></td>
                 </tr>
             </c:forEach>

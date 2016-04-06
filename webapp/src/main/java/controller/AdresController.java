@@ -68,11 +68,8 @@ public class AdresController {
     }
     
     @RequestMapping(value="/createOrUpdateAdres", method=RequestMethod.POST)
-    public String updateAdres(@Valid Adres adres, Errors errors, @ModelAttribute("straatnaam") String straatnaam, 
-    		@ModelAttribute("huisnummer") String huisnummer, @ModelAttribute("postcode") String postcode, 
-    		@ModelAttribute("woonplaats") String woonplaats, @ModelAttribute("idAdrestype") String idAdresType, 
-    		@ModelAttribute("oudIdAdresType") String oudIdAdresType, @RequestParam("idAdres") String idAdres, 
-    		@ModelAttribute("idKlant") String idKlant, Model model) {
+    public String createOrUpdateAdres(@Valid Adres adres, Errors errors, @ModelAttribute("idAdrestype") String idAdresType, 
+    		@ModelAttribute("oudIdAdresType") String oudIdAdresType, @ModelAttribute("idKlant") String idKlant, Model model) {
     	if(errors.hasErrors()){
     		int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
     		AdresType oudAdresType = klantenService.readAdresTypeOpId(oudAdresTypeId);
@@ -84,32 +81,27 @@ public class AdresController {
     	
     	int klantId = Integer.parseInt(idKlant);
     	int adresTypeId = Integer.parseInt(idAdresType);
-    	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(postcode, huisnummer);
-    	
-    	adres.setStraatnaam(straatnaam);
-    	adres.setHuisnummer(huisnummer);
-    	adres.setPostcode(postcode);
-    	adres.setWoonplaats(woonplaats);
-    	
-    	if (checkAdres == null && !idAdres.isEmpty()) {
-    		int adresId = Integer.parseInt(idAdres);
+    	Adres checkAdres = klantenService.readAdresOpPostcodeEnHuisnummer(adres.getPostcode(), adres.getHuisnummer());
+    	if (checkAdres == null && adres.getIdAdres() != null) {
+    		int adresId = adres.getIdAdres();
     		int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
+    		adres.setIdAdres(null);
     		klantenService.createAdres(adres);
 			klantenService.addAdresToKlant(klantId, adres.getIdAdres(), adresTypeId);
 			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);
 			if (klantenService.checkIfAdresIsOwned(adresId).size() == 0)
 	    		klantenService.deleteAdresById(adresId);
     	}
-    	else if (checkAdres == null && (idAdres == null || idAdres.isEmpty())) {
+    	else if (checkAdres == null && adres.getIdAdres() == null) {
     		klantenService.createAdres(adres);
 			klantenService.addAdresToKlant(klantId, adres.getIdAdres(), adresTypeId);
     	}
     	else if (checkAdres != null) {
-    		if (idAdres == null || idAdres.isEmpty()) {
+    		if (adres.getIdAdres() == null) {
     			klantenService.addAdresToKlant(klantId, checkAdres.getIdAdres(), adresTypeId);
     		}
     		else {
-    			int adresId = Integer.parseInt(idAdres);
+    			int adresId = adres.getIdAdres();
     			int oudAdresTypeId = Integer.parseInt(oudIdAdresType);
     			klantenService.addAdresToKlant(klantId, checkAdres.getIdAdres(), adresTypeId);
     			klantenService.deleteAdresFromKlant(klantId, adresId, oudAdresTypeId);

@@ -22,17 +22,19 @@ public class Adres implements java.io.Serializable {
     private Integer idAdres;
     @NotNull
     @Size(min=2, max=45)
+    @Pattern(regexp="\\w+", message="Dit is geen geldige plaatsnaam.")
     private String straatnaam;
     @NotNull
-    //@Size(min=6, max=7)
     @Pattern(regexp="^[1-9][0-9]{3}(?!SA|SD|SS)[A-Z]{2}$", message="Dit is geen geldige postcode. Gebruik geen spaties en geen "
     		+ "kleine letters. Voorbeeld: 1234AB")
     private String postcode;
     @NotNull
     @Size(min=1, max=11)
+    @Pattern(regexp="\\d{1,}\\w{0,2}", message="Dit is geen geldig huisnummer.")
     private String huisnummer;
     @NotNull
     @Size(min=3, max=45)
+    @Pattern(regexp="\\w+", message="Dit is geen geldige woonplaats.")
     private String woonplaats;
 
     public Adres() {

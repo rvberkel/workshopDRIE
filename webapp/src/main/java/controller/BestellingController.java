@@ -26,20 +26,13 @@ public class BestellingController {
 	@Autowired
 	BestellingService bestelService;
 
-	@Autowired
-	Klant klant;
-	@Autowired
-	Bestelling bestelling;
-	@Autowired
-	BestellingHasArtikel bha;
-
 	@RequestMapping(value="/listBestellingen", method=GET)
 	public String listBestellingen(Model model) {
 		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
     	return "listBestelling";
 	}
 	
-	@RequestMapping(value="/createBestelling", method=RequestMethod.GET)
+	@RequestMapping(value="/showCreateBestellingForm", method=RequestMethod.GET)
     public String showBestellingForm(Model model) {
 		model.addAttribute("artikelen", bestelService.readAllArtikel());
 		model.addAttribute("aantal", "");
@@ -56,13 +49,11 @@ public class BestellingController {
 			//@RequestParam("artikelprijs") String artikelprijs,
 			@RequestParam("aantal") String aantal,
 			@RequestParam("klantId") String klantId,
-			@RequestParam("idBestelling") String bestellingId,
 			Model model) {
 		
-		klant = new Klant();
+		Klant klant = new Klant();
 		klant.setIdKlant(Integer.parseInt(klantId));
-		
-		bestelling = new Bestelling();
+		Bestelling bestelling = new Bestelling();
 		bestelling.setKlant(klant);
 		
 		String[] artikelIds = artikelId.split(",");
@@ -81,26 +72,23 @@ public class BestellingController {
 		// === CREATE ===
 		//if (bestellingId == null || bestellingId.isEmpty() || Integer.parseInt(bestellingId) == 0) {
 			
-			bestelService.createBestelling(bestelling);
+		bestelService.createBestelling(bestelling);
 			
-			for(int i = 0; i < artikelIds.length; i++) {
-				
-				int id = Integer.parseInt(artikelIds[i]);
-				Artikel artikelObj = bestelService.readArtikelOpId(id);
-				bha = new BestellingHasArtikel();
-				bha.setArtikel(artikelObj);  
-				bha.setBestelling(bestelling);
-				bha.setAantal(Integer.parseInt(cleanedAantallen.get(i))); 
-				//bestelling.addToBestellingHasArtikelen(bha);
-				bestelService.createBestellingHasArtikel(bha);
-			}
-			
-	
+		for(int i = 0; i < artikelIds.length; i++) {	
+			int id = Integer.parseInt(artikelIds[i]);
+			Artikel artikelObj = bestelService.readArtikelOpId(id);
+			BestellingHasArtikel bha = new BestellingHasArtikel();
+			bha.setArtikel(artikelObj);  
+			bha.setBestelling(bestelling);
+			bha.setAantal(Integer.parseInt(cleanedAantallen.get(i))); 
+			//bestelling.addToBestellingHasArtikelen(bha);
+			bestelService.createBestellingHasArtikel(bha);
+		}
 		model.addAttribute("bestellingen", bestelService.readAlleBestellingen());
         return "listBestelling";
 	}
 	
-	@RequestMapping(value="/showUpdateBestelling", method=RequestMethod.GET)
+	@RequestMapping(value="/showUpdateBestellingForm", method=RequestMethod.GET)
     public String showUpdateBestellingForm(@RequestParam("idBestelling") String idBestelling, Model model) {
     	
 		int id = Integer.parseInt(idBestelling);
@@ -136,11 +124,11 @@ public class BestellingController {
 			}
 		}
 		
-		String[] bhaIds = bhaId.split(","); //deze wordt 'beschermt' door de checkboxes
+		String[] bhaIds = bhaId.split(","); //deze wordt 'beschermd' door de checkboxes
 				
 		for(int i = 0; i < bhaIds.length; i++) {
 			int id = Integer.parseInt(bhaIds[i]);
-			bha = bestelService.readBestellingHasArtikelOpId(id);
+			BestellingHasArtikel bha = bestelService.readBestellingHasArtikelOpId(id);
 			bha.setAantal(Integer.parseInt(cleanedAantallen.get(i))); 
 			//bestelling.addToBestellingHasArtikelen(bha);
 			bestelService.updateAantalArtikelenInBestelling(bha);
@@ -163,26 +151,19 @@ public class BestellingController {
 	
 	//Delete artikel from bestelling
 	@RequestMapping (value = "/deleteArtikelFromBestelling", method=RequestMethod.GET)
-	public String deleteArtFromBest(@RequestParam("idBHA") String idBestelArtikel,
-									@RequestParam("idBestelling") String idBestelling, //zonder dit leek ie beter te werken
+	public String deleteArtFromBest(@RequestParam("idBestelling") String idBestelling,//zonder dit leek ie beter te werken
+									@RequestParam("idArtikel") String idArtikel,
+									@RequestParam("klantId") String klantId,
 									Model model) {
-		
-		int bhaId = Integer.parseInt(idBestelArtikel);
-		bha = bestelService.readBestellingHasArtikelOpId(bhaId);
-		int artikelId = bha.getArtikel().getIdArtikel();
-		
-//		bestelling = bha.getBestelling();
-//		int bestellingId = bestelling.getIdBestelling();
-		int bestellingId = Integer.parseInt(idBestelling);
-		bestelling = bestelService.readBestellingOpId(bestellingId);		
-		
+		int artikelId = Integer.parseInt(idArtikel);
+		int bestellingId = Integer.parseInt(idBestelling);	
 		bestelService.deleteArtikelUitBestelling(bestellingId, artikelId);
-		
+		Bestelling bestelling = bestelService.readBestellingOpId(bestellingId);
 		Set<BestellingHasArtikel> bhas = bestelling.getBestellingHasArtikelen(); //zit dit misschien in dezelfde hibernate sessie oid?
 		   	
     	model.addAttribute("bestellingHasArtikelen", bhas);
     	model.addAttribute("bestelling", bestelling);
-		model.addAttribute("klantId", bestelling.getKlant().getIdKlant());
+		model.addAttribute("klantId", klantId);
 		
 		return "bestellingUpdate";
 	}
