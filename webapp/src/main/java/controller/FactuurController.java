@@ -27,8 +27,6 @@ public class FactuurController {
 	@Autowired
 	Factuur factuurObject;
 	
-	@Autowired
-	Betaalwijze betaalwijzeObject;
 	
 	/* ====    methodes    ==== */
 	
@@ -48,42 +46,48 @@ public class FactuurController {
 //	}
 	
 	@RequestMapping(value="/createfactuur", method=RequestMethod.GET)
-    public String showCreateFactuurForm() {
-		//public String showCreateFactuurForm(Model model) {
-		//	model.addAttribute(new Factuur());
+    public String showCreateFactuurForm(@RequestParam("idBestelling") String idBestelling, 
+									Model model) {
+		
+		Bestelling bestelObject = new Bestelling();
+		bestelObject.setIdBestelling(Integer.parseInt(idBestelling)); 
+		
+		factuurObject = new Factuur();
+		factuurObject.setBestelling(bestelObject);
+		
+		model.addAttribute("factuur", factuurObject);
+		
     	return "factuur";
     }
 	
 	@RequestMapping(value="/createfactuur", method=RequestMethod.POST)
-	public String processFactuurForm(@RequestParam("idFactuur") String idFactuur,
-									 @RequestParam("factuurDatum") Date factuurDatum, 
-									 @RequestParam("idBestelling") String idBestelling, Model model) {
+	public String processFactuurForm(@RequestParam("factuurDatum") Date factuurDatum, 
+									 @RequestParam("idBestelling") String idBestelling, 
+									 Model model) {
 		
-		factuurObject = new Factuur();
-		factuurObject.setFactuurDatum(factuurDatum); 
+		int bestelId = Integer.parseInt(idBestelling);
+		Factuur factuurObj = null;
 		
-		int bestellingId = Integer.parseInt("0" + idBestelling);
-		int factuurId = Integer.parseInt(idFactuur);
+		try {
+			factuurObj = bestelService.readFactuurOpBestellingId(bestelId).get(0);
+		} catch (Exception ex) {}
 		
-		//checken of de ingegeven bestelling Id wel bestaat
-		if (bestelService.readBestellingOpId(bestellingId) == null)  {
-			factuurObject.setIdFactuur(factuurId);
-			model.addAttribute("factuur", factuurObject);
-			//eigenlijk dus nog iets meegeven van een foutmelding
-			return "factuur";
-		} else {
-			Bestelling b = new Bestelling();
-			b.setIdBestelling(bestellingId);
-			factuurObject.setBestelling(b); 
+		//UPDATE
+		if (factuurObj != null) {
+			factuurObj.setFactuurDatum(factuurDatum);
+			bestelService.updateFactuur(factuurObj);
+		} 
+		//CREATE
+		else {
+			Bestelling bestelObj = new Bestelling();
+			bestelObj.setIdBestelling(bestelId);
+			
+			factuurObj = new Factuur();
+			factuurObj.setFactuurDatum(factuurDatum);
+			factuurObj.setBestelling(bestelObj);
+			
+			bestelService.createFactuur(factuurObj);
 		}
-		
-		//checken voor creeeren of updaten
-		if (factuurId == 0)
-    		bestelService.createFactuur(factuurObject);
-    	else {
-    		factuurObject.setIdFactuur(factuurId);
-    		bestelService.updateFactuur(factuurObject);
-    	}
 		
     	model.addAttribute("facturen", bestelService.readAlleFacturen());
 		
@@ -91,10 +95,13 @@ public class FactuurController {
 	}
 	
 	@RequestMapping(value="/showUpdateFactuur", method=RequestMethod.GET)
-    public String showUpdateFactuurForm(@RequestParam("idFactuur") String idFactuur, Model model) {
-    	int id = Integer.parseInt(idFactuur);
-    	factuurObject = bestelService.readFactuurOpId(id);
+    public String showUpdateFactuurForm(@RequestParam("idFactuur") String idFactuur, 
+    									Model model) {
+    	
+    	factuurObject = bestelService.readFactuurOpId(Integer.parseInt(idFactuur));
+    	
     	model.addAttribute("factuur", factuurObject);
+    	
     	return "factuur";
     }
 	

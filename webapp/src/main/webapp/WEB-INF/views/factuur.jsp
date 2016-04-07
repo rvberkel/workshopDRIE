@@ -8,17 +8,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create or update factuur</title>
 </head>
+<h1>Factuur maken</h1>
 <body>
 
-<form ID="createFactuur?idFactuur=${factuur.idFactuur}" method="POST" action="/webapp/createfactuur">
-        ID-Factuur : 
-        <input type="text" readonly="readonly" name="idFactuur" value="<c:out value="${factuur.idFactuur}" />" /> <br /> 
-          Factuurdatum (JJJJ/MM/DD): 
-        <fmt:formatDate var="fmtDate" value="${factuur.factuurDatum}" pattern="yyyy/MM/dd"/>
-        <input type="text" name="factuurDatum" value="<c:out value="${fmtDate}" />" /> <br /> 
-        Bijbehorende bestelling : 
-        <input type="text" name="idBestelling" value="<c:out value="${factuur.bestelling.idBestelling}" />" /> <br />
-			<input type="submit" value="Submit" />
-    </form>
+	<form ID="createFactuur?idFactuur=${factuur.idFactuur}" method="POST" action="/webapp/createfactuur">
+
+		<input type="hidden" readonly="readonly" name="idFactuur" value="<c:out value="${factuur.idFactuur}" />" /> <br />
+		Factuurdatum (JJJJ/MM/DD):
+		<fmt:formatDate var="fmtDate" value="${factuur.factuurDatum}" pattern="yyyy/MM/dd" />
+		<input type="text" name="factuurDatum"	value="<c:out value="${fmtDate}" />" /> <br /> 
+		Bijbehorende bestelling :
+		<input type="text" name="idBestelling" readonly="readonly" value="<c:out value="${factuur.bestelling.idBestelling}" />" /> <br />
+	    <input type="submit" value="Submit" />
+	</form>
 </body>
 </html>

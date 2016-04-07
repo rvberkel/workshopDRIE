@@ -1,6 +1,8 @@
 package genericDao;
 
 import POJO.Account;
+import POJO.Factuur;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,4 +23,5 @@ public interface GenericDao <T, PK extends Serializable> {
     void deleteEntity(T persistentObject);
     void deleteEntityById(PK id);
     List<T> readAll();
+	//List<Factuur> readOpBestelId(int bestelId);
 }

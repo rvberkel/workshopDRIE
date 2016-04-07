@@ -52,4 +52,14 @@ public class FactuurDao extends GenericDaoImpl<Factuur, Integer> {
         List<Factuur> results = (List<Factuur>)q.list();
         return results;
     }
+    
+    public List<Factuur> readOpBestelId(int bestellingId) {
+    	String query = "select * from factuur where bestelling_idBestelling = " + bestellingId;
+        Session session = getCurrentSession();
+        SQLQuery q = session.createSQLQuery(query);
+        q.addEntity(Factuur.class);
+        List<Factuur> results = (List<Factuur>)q.list();
+        return results;
+    }
+    
 }

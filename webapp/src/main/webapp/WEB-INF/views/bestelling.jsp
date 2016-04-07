@@ -21,22 +21,26 @@
 					<th></th> <th>Naam</th>	<th>Artikelnummer</th>	<th>Stukprijs</th>	<th>Aantal</th>
 				</tr>
 			</thead>
-			<tbody>	
-					<c:forEach items="${artikelen}" var="artikel" >
-					<tr>	
-					<td><input type="checkbox" name="idArtikel" value="${artikel.idArtikel}"/></td>
-					<td><input type="text" name="artikelnaam" readonly="readonly" value="${artikel.artikelnaam}"/></td>
-					<td><input type="text" name="artikelnummer" readonly="readonly" value="${artikel.artikelnummer}"/></td>
-					<td><input type="text" name="artikelprijs" readonly="readonly" value="${artikel.artikelprijs}"/></td>
-					<td><input type="text" name="aantal" value="${aantal}"/></td>
-					
-					<!--  
+			<tbody>
+				<c:forEach items="${artikelen}" var="artikel">
+					<tr>
+						<td><input type="checkbox" name="idArtikel"
+							value="${artikel.idArtikel}" id="ideeee" /></td>
+						<td><input type="text" name="artikelnaam" readonly="readonly"
+							value="${artikel.artikelnaam}" /></td>
+						<td><input type="text" name="artikelnummer"
+							readonly="readonly" value="${artikel.artikelnummer}" /></td>
+						<td><input type="text" name="artikelprijs"
+							readonly="readonly" value="${artikel.artikelprijs}" /></td>
+						<td><input type="text" name="aantal" value="${aantal}" /></td>
+
+						<!--  
 						<td><sf:input path="artikelnummer" /> <sf:errors path="artikelnummer" cssErrorClass="errors" /></td>
 						<td><sf:input path="artikelprijs" /> <sf:errors path="artikelprijs" /></td>					-->
 					</tr>
-					
-					</c:forEach>
+				</c:forEach>
 			</tbody>
+			
 		</table>		
 		Klant ID: <input type="text" name="klantId" value="${klantId}"/><br>
 		<!--Bestelling ID: <input type="text" name="idBestelling" readonly="readonly" value="${bestelling.idBestelling}"/><br>-->

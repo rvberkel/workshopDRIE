@@ -29,9 +29,18 @@
                     <td><c:out value="${bestelling.idBestelling}"/></td>
                     
                     <td></td>
-                    <td><c:forEach items="${bestelling.bestellingHasArtikelen}" var="bestellingHasArtikel">
+                    <td> <!-- <c:forEach items="${bestelling.bestellingHasArtikelen}" var="bestellingHasArtikel">
+                    	<script>
+                    	import POJO.BestellingHasArtikel;
                     	
-                    </c:forEach> 
+                    	
+                    		double totaal = 0;
+                    		for(BestellingHasArtikel bha: bhas) {
+                    		}
+                    	</script>
+                    </c:forEach> -->
+                    <!--   dit is niet uit te rekenen, en totaalprijs uit de controller kan hier niet, 
+                    		want geen eigenschappen van een bestelling --> 
                     
                     </td>
                     

@@ -37,7 +37,8 @@
 					<td><a href="deleteArtikelFromBestelling?idBestelling=${bestelling.idBestelling}&klantId=${klantId}&idBHA=${bha.idBestelArtikel}">verwijder</a></td>
 				</tr></c:forEach>
 				<tr>
-					<td></td><td></td><td>Totaalprijs:</td><td>${totaalprijs}</td><td>TODO: You will PAY!! for this</td>
+					<td></td><td></td><td>Totaalprijs:</td><td>${totaalprijs}</td>
+					<td><a href="createfactuur?idBestelling=${bestelling.idBestelling}">You will pay for this!</a></td>
 				</tr>
 			</tbody>
 		</table>		

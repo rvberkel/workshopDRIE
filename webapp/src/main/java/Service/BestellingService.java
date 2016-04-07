@@ -121,6 +121,11 @@ public class BestellingService {
         LOG.info("readFactuurOpId");
         return (Factuur) factuurDao.readEntity(factuurId);
     }
+    public List<Factuur> readFactuurOpBestellingId(int bestelId) {
+    	LOG.info("readFactuurOpBestellingId gestart");
+    	return (List<Factuur>)((FactuurDao) factuurDao).readOpBestelId(bestelId);
+    }
+    
     public List<Factuur> readAlleFacturen() {
     	LOG.info("readAlleFacturen gestart");
     	return(List<Factuur>)factuurDao.readAll();
