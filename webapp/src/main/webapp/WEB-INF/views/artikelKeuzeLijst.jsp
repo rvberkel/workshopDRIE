@@ -39,8 +39,7 @@
 					
 					</c:forEach>
 			</tbody>
-		</table>		
-		<input type="hidden" name="klantId" value="${klantId}"/><br>
+		</table>
 		<input type="submit" value="voeg toe" />
 	</sf:form>
 	<a href="showUpdateBestellingForm?idBestelling=${idBestelling}" class="button">Terug naar bestellingupdate</a>

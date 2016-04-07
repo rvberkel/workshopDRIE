@@ -67,9 +67,16 @@ public class BestellingController {
 		System.out.println(alleArtikelen.size());
 		List<Artikel> bijnaAlleArtikelen = new ArrayList<>();
 		for (Artikel artikel : alleArtikelen) {
+			int count = 0;
 			for (Artikel bestelArtikel : artikelenInBestelling) {
-				if (!artikel.getIdArtikel().equals(bestelArtikel.getIdArtikel()))
+				if (artikel.getIdArtikel().equals(bestelArtikel.getIdArtikel())) {
+					break;
+				}
+				else {
+					count++;
+					if (count == artikelenInBestelling.size())
 					bijnaAlleArtikelen.add(artikel);
+				}
 			}
 		}
 		System.out.println(bijnaAlleArtikelen.size());
@@ -187,8 +194,8 @@ public class BestellingController {
 	}
 	
 	@RequestMapping(value = "/addArtikelToBestelling", method=RequestMethod.POST)
-	public String addArtToBest(@RequestParam("idBestelling") String idBestelling, @RequestParam("aantal") String aantal,
-			@RequestParam("idArtikel") String idArtikel, Model model) {
+	public String addArtToBest(@RequestParam("idBestelling") String idBestelling, @RequestParam("klantId") String klantId,
+			@RequestParam("aantal") String aantal, @RequestParam("idArtikel") String idArtikel, Model model) {
 		int bestellingId = Integer.parseInt(idBestelling);
 		String[] artikelIds = idArtikel.split(",");
 		String[] aantallen = aantal.split(",");
@@ -212,7 +219,7 @@ public class BestellingController {
 	
     	model.addAttribute("bestellingHasArtikelen", bhas);
     	model.addAttribute("bestelling", bestelling);
-		model.addAttribute("klantId");
+		model.addAttribute("klantId", klantId);
 		model.addAttribute("totaalprijs", getTotaalprijs(bestellingId));
 		return "bestellingUpdate";
 	}
