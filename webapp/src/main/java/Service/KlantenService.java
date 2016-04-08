@@ -14,6 +14,8 @@ import daos.AdresDao;
 import daos.AdresTypeDao;
 import daos.KlantDao;
 import genericDao.GenericDao;
+import interfaces.AdresRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +47,8 @@ public class KlantenService {
     @Autowired
     //@Qualifier("AdresTypeDao")
     AdresTypeDao adresTypeDao;
+    @Autowired
+    AdresRepository adresRepo;
    // ===== Create ======
     
     public boolean createKlant(Klant klant){
@@ -128,7 +132,7 @@ public class KlantenService {
     public Adres readAdresOpPostcodeEnHuisnummer(String postcode, String huisnummer) {
     	LOG.info("readAdresOpPostcodeEnHuisnummer gestart");
     	try {
-    		return adresDao.readByPostcodeAndHuisnummer(postcode, huisnummer);
+    		return adresRepo.readByPostcodeAndHuisnummer(postcode, huisnummer);
     	}
     	catch (Exception ex) {
     		ex.printStackTrace();

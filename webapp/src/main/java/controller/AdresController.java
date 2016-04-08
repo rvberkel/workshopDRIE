@@ -23,7 +23,6 @@ import POJO.AdresType;
 import POJO.Artikel;
 import POJO.Klant;
 import Service.KlantenService;
-import springCommandObjects.AdresWithAdrestype;
 
 @Controller
 @SessionAttributes({"idKlant", "oudIdAdresType", "adressenVanKlant"})

@@ -68,6 +68,7 @@ public class AdresDao extends GenericDaoImpl<Adres, Integer> implements AdresDao
     	return results.get(0);
     }
     
+    
     @Override
     public void decoupleAdresFromKlant(int klantId, int adresId, int adresTypeId) {
     	String query = "delete from klant_has_adres where klant_idKlant = " + klantId + " and adres_idAdres = " + adresId 

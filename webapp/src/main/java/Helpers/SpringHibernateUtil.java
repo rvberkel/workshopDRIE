@@ -19,8 +19,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.*;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -28,6 +34,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan({"POJO", "Helpers", "Service", "daos", "genericDao"})
 @EnableTransactionManagement(proxyTargetClass=true)
 @PropertySource("classpath:app.properties")
+@EnableJpaRepositories(basePackages="interfaces")
 //@ImportResource("classpath:collections4spring.xml") //optioneel via xml configuratie
 public class SpringHibernateUtil {
      
@@ -79,6 +86,24 @@ public class SpringHibernateUtil {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
+    }
+    
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory (DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    	LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
+    	emfb.setDataSource(dataSource);
+    	emfb.setJpaVendorAdapter(jpaVendorAdapter);
+    	emfb.setPackagesToScan("interfaces", "POJO");
+    	return emfb;
+    }
+    
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+    	HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+    	adapter.setShowSql(false);
+    	adapter.setGenerateDdl(false);
+    	adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
+    	return adapter;
     }
     
     @Bean
